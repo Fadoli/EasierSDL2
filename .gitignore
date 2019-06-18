@@ -1,0 +1,8 @@
+# First ignore all .subdirs
+.*/
+# Then all . files excepts .gitignore
+.*
+!.gitignore
+
+# Don't want any .o
+*.o
