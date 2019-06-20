@@ -4,5 +4,6 @@
 .*
 !.gitignore
 
-# Don't want any .o
+# Don't want any objects
 *.o
+obj/
