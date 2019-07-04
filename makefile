@@ -1,8 +1,10 @@
 CC= g++ -std=c++14
 DBG= gdb
+
 DFLAGS= -g
 OFLAGS= -O3
-CPPFLAGS= -Wall -fpermissive $(DFLAGS)
+CPPFLAGS= -Wall -Wextra -fpermissive $(OFLAGS)
+
 TARGET= sdl2.bin
 
 DIR1= src

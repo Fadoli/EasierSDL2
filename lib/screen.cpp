@@ -1,9 +1,12 @@
 #include <iostream>
 
-#include "../lib/lib_screen.h"
-#include "../lib/lib_util.h"
+#include "screen.h"
+#include "util.h"
+#include "image.h"
 
-void lib_Screen::init( int X, int Y )
+namespace sdl2_lib
+{
+void Screen::init(int X, int Y)
 {
     Open = 1;
     Wdevent = 0;
@@ -18,11 +21,11 @@ void lib_Screen::init( int X, int Y )
     Mousey = 0;
 
     TARGET_LAST = SDL_GetTicks();
-    TARGET_FPS  = 0;
+    TARGET_FPS = 0;
     TARGET_TIME = 0;
     TARGET_MULT = 0;
-    TARGET_LOGIC= 0;
-    TARGET_LOGICFPS=0;
+    TARGET_LOGIC = 0;
+    TARGET_LOGICFPS = 0;
     FPS = 0;
     Frame = 0;
     DropsCount = 0;
@@ -30,36 +33,36 @@ void lib_Screen::init( int X, int Y )
     Sx = X;
     Sy = Y;
 
-    for (int i = 0 ; i < SDLK_COUNT ; i ++ )
+    for (int i = 0; i < SDLK_COUNT; i++)
         Clavier[i] = NotPressed;
 }
 
-void lib_Screen::setLogicalFPS( int A )
+void Screen::setLogicalFPS(int A)
 {
     TARGET_LOGICFPS = A;
-    TARGET_LOGIC = ((double)1000/A);
+    TARGET_LOGIC = ((double)1000 / A);
 }
-void lib_Screen::setFPS( int A )
+void Screen::setFPS(int A)
 {
     TARGET_FPS = A;
-    TARGET_TIME = (1000/A);
+    TARGET_TIME = (1000 / A);
 }
-void lib_Screen::FPS_DELAY()
+void Screen::FPS_DELAY()
 {
-    int Remain = (TARGET_LAST + TARGET_TIME)-SDL_GetTicks();
+    int Remain = (TARGET_LAST + TARGET_TIME) - SDL_GetTicks();
 
-    while ( Remain > 2 )
+    while (Remain > 2)
     {
         SDL_Delay(1);
-        Remain = (TARGET_LAST + TARGET_TIME)-SDL_GetTicks();
+        Remain = (TARGET_LAST + TARGET_TIME) - SDL_GetTicks();
     }
 
-    while ( Remain > 0 )
+    while (Remain > 0)
     {
-        Remain = (TARGET_LAST + TARGET_TIME)-SDL_GetTicks();
+        Remain = (TARGET_LAST + TARGET_TIME) - SDL_GetTicks();
     }
 }
-void lib_Screen::update()
+void Screen::update()
 {
     // Just updating & cleaning the screen here.
     SDL_RenderPresent(Render);
@@ -72,90 +75,90 @@ void lib_Screen::update()
     }
     if (TARGET_LOGICFPS)
     {
-        TARGET_MULT = (double) (SDL_GetTicks()-TARGET_LAST)/TARGET_LOGIC;
+        TARGET_MULT = (double)(SDL_GetTicks() - TARGET_LAST) / TARGET_LOGIC;
     }
     TARGET_LAST = SDL_GetTicks();
 }
-double lib_Screen::getLogicalMult ()
+double Screen::getLogicalMult()
 {
     return TARGET_MULT;
 }
 
-void lib_Screen::create(string title, int x, int y)
+void Screen::create(string title, int x, int y)
 {
-    create(title,x,y,0,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
-    init(x,y);
+    create(title, x, y, 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    init(x, y);
 }
 
-void lib_Screen::create(string title, int x, int y, Uint32 Winflag, Uint32 Renflag)
+void Screen::create(string title, int x, int y, Uint32 Winflag, Uint32 Renflag)
 {
-    Window = SDL_CreateWindow( title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x, y, Winflag);
-    Render = SDL_CreateRenderer( Window, -1, Renflag);
-    init(x,y);
+    Window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x, y, Winflag);
+    Render = SDL_CreateRenderer(Window, -1, Renflag);
+    init(x, y);
 }
-lib_Screen::lib_Screen ()
+Screen::Screen()
 {
     Window = 0;
     Render = 0;
 }
-lib_Screen::~lib_Screen ()
+Screen::~Screen()
 {
     destroy();
 }
 
-void lib_Screen::recreate( Uint32 Renflag )
+void Screen::recreate(Uint32 Renflag)
 {
     SDL_DestroyRenderer(Render);
-    Render = SDL_CreateRenderer( Window, -1, Renflag);
+    Render = SDL_CreateRenderer(Window, -1, Renflag);
 }
 
-void lib_Screen::destroy()
+void Screen::destroy()
 {
     SDL_DestroyWindow(Window);
     SDL_DestroyRenderer(Render);
 }
 
-void lib_Screen::name( char * name )
+void Screen::name(char *name)
 {
-    SDL_SetWindowTitle(Window,name);
+    SDL_SetWindowTitle(Window, name);
 }
-void lib_Screen::name( string name )
+void Screen::name(string name)
 {
-    SDL_SetWindowTitle(Window,name.c_str());
+    SDL_SetWindowTitle(Window, name.c_str());
 }
 
-int lib_Screen::key( int Key )
+int Screen::key(int Key)
 {
-    int Id = (Key<128)?Key:Key-CONVERT;
-    int lcl = Clavier[Id]; 
-    if ( Clavier[ Id ] & OnPress )
+    int Id = (Key < 128) ? Key : Key - CONVERT;
+    int lcl = Clavier[Id];
+    if (Clavier[Id] & OnPress)
     {
         Clavier[Id] = Pressed;
     }
     return lcl;
 }
-void lib_Screen::event()
+void Screen::event()
 {
     unsigned int Time = SDL_GetTicks();
-    char * Fpath = 0;
+    char *Fpath = 0;
     int key;
-    while ( SDL_PollEvent(&E) )
+    while (SDL_PollEvent(&E))
     {
-        switch(E.type)
+        switch (E.type)
         {
-        case SDL_DROPFILE:  // Drag & Drop
+        case SDL_DROPFILE: // Drag & Drop
             Fpath = E.drop.file;
-            if ( DropsCount < MAX_DROP )
-                strcpy(DropsData[DropsCount++],Fpath);
+            if (DropsCount < MAX_DROP)
+                strcpy(DropsData[DropsCount++], Fpath);
             delete Fpath;
             break;
         case SDL_KEYUP:
-            key = (E.key.keysym.sym<128)?E.key.keysym.sym:E.key.keysym.sym-CONVERT;
+            key = (E.key.keysym.sym < 128) ? E.key.keysym.sym : E.key.keysym.sym - CONVERT;
             Clavier[key] = NotPressed;
             break;
         case SDL_KEYDOWN:
-            key = (E.key.keysym.sym<128)?E.key.keysym.sym:E.key.keysym.sym-CONVERT;
-            if ( Clavier[key] == NotPressed )
+            key = (E.key.keysym.sym < 128) ? E.key.keysym.sym : E.key.keysym.sym - CONVERT;
+            if (Clavier[key] == NotPressed)
                 Clavier[key] = OnNewPress + OnPress + Pressed;
             else
                 Clavier[key] = OnPress + Pressed;
@@ -169,7 +172,7 @@ void lib_Screen::event()
             switch (E.button.button)
             {
             case SDL_BUTTON_LEFT:
-                Mousel  = 0;
+                Mousel = 0;
                 break;
             case SDL_BUTTON_RIGHT:
                 Mouser = 0;
@@ -187,20 +190,20 @@ void lib_Screen::event()
             switch (E.button.button)
             {
             case SDL_BUTTON_LEFT:
-                if ( !Mousel )
-                    Mousel  = OnPress;
+                if (!Mousel)
+                    Mousel = OnPress;
                 else
                     Mousel = Pressed;
                 break;
             case SDL_BUTTON_RIGHT:
-                if ( !Mouser )
-                    Mouser  = OnPress;
+                if (!Mouser)
+                    Mouser = OnPress;
                 else
                     Mouser = Pressed;
                 break;
             case SDL_BUTTON_MIDDLE:
-                if ( !Mousem )
-                    Mousem  = OnPress;
+                if (!Mousem)
+                    Mousem = OnPress;
                 else
                     Mousem = Pressed;
                 break;
@@ -221,7 +224,7 @@ void lib_Screen::event()
             case SDL_WINDOWEVENT_RESTORED:
             case SDL_WINDOWEVENT_MAXIMIZED:
                 Wdevent = 1;
-            default :
+            default:
                 break;
             }
             break;
@@ -231,7 +234,7 @@ void lib_Screen::event()
     }
 }
 
-int lib_Screen::HasWindowEventHappened()
+int Screen::HasWindowEventHappened()
 {
     if (Wdevent)
     {
@@ -241,40 +244,41 @@ int lib_Screen::HasWindowEventHappened()
     return 0;
 }
 
-int lib_Screen::isOpen()
+int Screen::isOpen()
 {
-    return (Open==1);
+    return (Open == 1);
 }
 
-void lib_Screen::calc_fps ()
+void Screen::calc_fps()
 {
     Frame++;
     if (Frame < FPS_CALC_REFRESH)
         return;
     unsigned int now = SDL_GetTicks();
-    if (now == Before) {
+    if (now == Before)
+    {
         SDL_Delay(1);
     }
     now = SDL_GetTicks();
-    FPS = (1000*Frame)/(now-Before);
+    FPS = (1000 * Frame) / (now - Before);
     Before = now;
     Frame = 0;
 }
 
-int lib_Screen::getFps()
+int Screen::getFps()
 {
     return FPS;
 }
 
-int lib_Screen::Do()
+int Screen::Do()
 {
-    int Mouselx=Mousex,Mousely=Mousey;
-    if ( Mousel )
+    int Mouselx = Mousex, Mousely = Mousey;
+    if (Mousel)
         Mousel = Pressed;
-    if ( Mouser )
+    if (Mouser)
         Mouser = Pressed;
     calc_fps();
-    SDL_SetRenderDrawColor(Render,0,0,0,255);
+    SDL_SetRenderDrawColor(Render, 0, 0, 0, 255);
     update();
     event();
     Mousevx = Mousex - Mouselx;
@@ -282,11 +286,12 @@ int lib_Screen::Do()
     return isOpen();
 }
 
-int lib_Screen::lastPressed()
+int Screen::lastPressed()
 {
     return LastPressed;
 }
-int lib_Screen::lastPressed( unsigned int Bef )
+int Screen::lastPressed(unsigned int Bef)
 {
-    return (Bef<=MsLastPressed)*LastPressed;
+    return (Bef <= MsLastPressed) * LastPressed;
 }
+} // namespace sdl2_lib

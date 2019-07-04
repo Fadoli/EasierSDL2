@@ -1,28 +1,30 @@
 #include "SDL2/SDL_image.h"
 #include <iostream>
 
-#include "lib_image.h"
-#include "lib_screen.h"
-#include "lib_util.h"
+#include "screen.h"
+#include "image.h"
+#include "util.h"
 
-lib_Surface* lib_Image::_empty = lib_SurfaceRGB(64,64,255,128,128);
-
-lib_Surface* lib_Image::_innernLoadImg ( const char * filename )
+namespace sdl2_lib
 {
-    lib_Surface * out = IMG_Load ( filename );
-    if ( out == NULL )
+Surface *Image::_empty = SurfaceRGB(64, 64, 255, 128, 128);
+
+Surface *Image::_innernLoadImg(const char *filename)
+{
+    Surface *out = IMG_Load(filename);
+    if (out == NULL)
     {
-        if ( _empty == NULL )
-            _empty = lib_SurfaceRGB(64,64,255,128,128);
+        if (_empty == NULL)
+            _empty = SurfaceRGB(64, 64, 255, 128, 128);
         out = _empty;
     }
     return out;
 }
 
-void lib_Image::Free()
+void Image::Free()
 {
     // If we don't have a texture we should do nothing
-    if ( !texture )
+    if (!texture)
         return;
 
     // Else notify the texture we are not using it anymore
@@ -31,7 +33,7 @@ void lib_Image::Free()
     texture = NULL;
     Name[0] = 0;
 }
-void lib_Image::Init()
+void Image::Init()
 {
     Name[0] = 0;
     Zx = 1;
@@ -51,36 +53,35 @@ void lib_Image::Init()
     Centered = 0;
     texture = 0;
 }
-lib_Image::~lib_Image ()
+Image::~Image()
 {
     Free();
 }
 
-
-lib_Image::lib_Image ( lib_Image * Img )
+Image::Image(Image *Img)
 {
     (*this) = (*Img);
 }
-lib_Image::lib_Image ( lib_Image & Img )
+Image::Image(Image &Img)
 {
     (*this) = Img;
 }
 
-lib_Image::lib_Image ( lib_Screen * S, lib_Surface * From )
+Image::Image(Screen *S, Surface *From)
 {
     Init();
     screen = S;
     Change(From);
 }
-lib_Image::lib_Image (lib_Screen * S, const char * name )
+Image::Image(Screen *S, const char *name)
 {
     Init();
     screen = S;
-    strcpy(Name,name);
+    strcpy(Name, name);
     Change(_innernLoadImg(name));
 }
 
-void lib_Image::Change ( lib_Surface * surf )
+void Image::Change(Surface *surf)
 {
 #if DEBUG >= 1
     /// Debugage Niveau 1.
@@ -99,7 +100,7 @@ void lib_Image::Change ( lib_Surface * surf )
 #endif // DEBUG
 #endif // DEBUG
     Free();
-    texture = new lib_Texture (screen->getRender(),surf);
+    texture = new Texture(screen->getRender(), surf);
 #if DEBUG >= 2
     if (texture == 0)
         cout << "Texture is NULL !" << endl;
@@ -108,14 +109,14 @@ void lib_Image::Change ( lib_Surface * surf )
     setZoom(1);
 }
 
-lib_Image & lib_Image::operator= (lib_Image & Orig)
+Image &Image::operator=(Image &Orig)
 {
     Init();
     texture = Orig.texture;
     texture->addRef();
     screen = Orig.screen;
     setCenter(Orig.Centered);
-    strcpy(Name,Orig.Name);
+    strcpy(Name, Orig.Name);
     //setZoom(100,100);
     /*
     cout << endl;
@@ -127,47 +128,47 @@ lib_Image & lib_Image::operator= (lib_Image & Orig)
     return (*this);
 }
 
-void lib_Image::setZoomx( double Zoom )
+void Image::setZoomx(double Zoom)
 {
     Zx = Zoom;
-    W = Zx*w();
+    W = Zx * w();
     if (Centered)
     {
-        bx = -W/2;
+        bx = -W / 2;
     }
     D.w = W;
 }
-void lib_Image::setZoomy( double Zoom )
+void Image::setZoomy(double Zoom)
 {
     Zy = Zoom;
-    H = Zy*h();
+    H = Zy * h();
     if (Centered)
     {
-        by = -H/2;
+        by = -H / 2;
     }
     D.h = H;
 }
-void lib_Image::setZoom( double Zoomx, double Zoomy )
+void Image::setZoom(double Zoomx, double Zoomy)
 {
-    setZoomx( Zoomx );
-    setZoomy( Zoomy );
+    setZoomx(Zoomx);
+    setZoomy(Zoomy);
 }
-void lib_Image::setZoom( double Zoom )
+void Image::setZoom(double Zoom)
 {
     Zx = Zoom;
     Zy = Zoom;
 
-    H = Zy*h();
-    W = Zx*w();
+    H = Zy * h();
+    W = Zx * w();
     if (Centered)
     {
-        bx = -W/2;
-        by = -H/2;
+        bx = -W / 2;
+        by = -H / 2;
     }
     D.w = W;
     D.h = H;
 }
-void lib_Image::setSize ( int W, int H )
+void Image::setSize(int W, int H)
 {
     this->W = W;
     this->H = H;
@@ -177,11 +178,11 @@ void lib_Image::setSize ( int W, int H )
     D.h = H;
     if (Centered)
     {
-        bx = -W/2;
-        by = -H/2;
+        bx = -W / 2;
+        by = -H / 2;
     }
 }
-void lib_Image::setCenter ( bool t )
+void Image::setCenter(bool t)
 {
     if (t)
         Centered = 1;
@@ -191,29 +192,25 @@ void lib_Image::setCenter ( bool t )
     setZoom(Zy);
 }
 
-
-
-void lib_Image::drawOrigAng (int Sx, int Sy, int Dx, int Dy, int Angx, int Angy, int Angz, double Zoom)
+void Image::drawOrigAng(int Sx, int Sy, int Dx, int Dy, int Angx, int Angy, int Angz, double Zoom)
 {
     SDL_Point from;
 
-    int Zx = D_cos(Angx)*Zoom/100,Zy = D_sin(Angy)*Zoom/100;
-    Angz = (Angz*360) / DATAMAX;
-
+    int Zx = D_cos(Angx) * Zoom / 100, Zy = D_sin(Angy) * Zoom / 100;
+    Angz = (Angz * 360) / DATAMAX;
 
     SDL_RendererFlip Flip = SDL_FLIP_NONE;
-
 
     D.x = Dx * Zx / 100;
     D.y = Dy * Zy / 100;
 
-    D.w = w()*Zx/100;
-    D.h = h()*Zy/100;
+    D.w = w() * Zx / 100;
+    D.h = h() * Zy / 100;
     if (D.w < 0)
     {
         D.w = -D.w;
         if (D.h < 0)
-            Angz = (Angz+180)%360;
+            Angz = (Angz + 180) % 360;
         else
             Flip = SDL_FLIP_HORIZONTAL;
     }
@@ -223,34 +220,35 @@ void lib_Image::drawOrigAng (int Sx, int Sy, int Dx, int Dy, int Angx, int Angy,
         Flip = SDL_FLIP_VERTICAL;
     }
 
-    from.x = -D.x+D.w/2;
-    from.y = -D.y+D.h/2;
-    D.x += Sx - D.w/2;
-    D.y += Sy - D.h/2;
+    from.x = -D.x + D.w / 2;
+    from.y = -D.y + D.h / 2;
+    D.x += Sx - D.w / 2;
+    D.y += Sy - D.h / 2;
 
-    SDL_RenderCopyEx(screen->getRender(),texture->Orig,0,&D,Angz,&from,Flip);
+    SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &D, Angz, &from, Flip);
 }
 
-void lib_Image::draw ( int x, int y, int ang, int R, int G, int B, int FLIP )
+void Image::draw(int x, int y, int ang, int R, int G, int B, int FLIP)
 {
     D.x = x + bx;
     D.y = y + by;
-    SDL_SetTextureColorMod(texture->Orig,R,G,B);
-    SDL_RenderCopyEx(screen->getRender(),texture->Orig,0,&D,ang,0,(SDL_RendererFlip)FLIP);
+    SDL_SetTextureColorMod(texture->Orig, R, G, B);
+    SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &D, ang, 0, (SDL_RendererFlip)FLIP);
 }
 
-void lib_Image::draw ( int x, int y, int ang )
-{
-    D.x = x + bx;
-    D.y = y + by;
-    //cout << D.x << ";" << D.y << " " << W << "x" << H << endl;
-    SDL_RenderCopyEx(screen->getRender(),texture->Orig,0,&D,ang,0,SDL_FLIP_NONE);
-}
-
-void lib_Image::draw ( int x, int y )
+void Image::draw(int x, int y, int ang)
 {
     D.x = x + bx;
     D.y = y + by;
     //cout << D.x << ";" << D.y << " " << W << "x" << H << endl;
-    SDL_RenderCopy(screen->getRender(),texture->Orig,0,&D);
+    SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &D, ang, 0, SDL_FLIP_NONE);
 }
+
+void Image::draw(int x, int y)
+{
+    D.x = x + bx;
+    D.y = y + by;
+    //cout << D.x << ";" << D.y << " " << W << "x" << H << endl;
+    SDL_RenderCopy(screen->getRender(), texture->Orig, 0, &D);
+}
+} // namespace sdl2_lib
