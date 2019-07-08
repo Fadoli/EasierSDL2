@@ -260,6 +260,10 @@ void Screen::calc_fps()
         SDL_Delay(1);
     }
     now = SDL_GetTicks();
+    if (now == Before)
+    {
+        now++;
+    }
     FPS = (1000 * Frame) / (now - Before);
     Before = now;
     Frame = 0;

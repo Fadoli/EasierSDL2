@@ -25,6 +25,8 @@ int main(int, char **)
 	// test.setPos(0,0);
 	// test.setSize(SX,SY);
 
+	double x=0,y=0;
+
 	SDL_RenderSetLogicalSize(Display.getRender(), SX, SY);
 
 	while (Display.Do())
@@ -34,8 +36,11 @@ int main(int, char **)
 			cout << "OnNewPress" << endl;
 		if (space & OnPress)
 			cout << "OnPress" << endl;
-		
+		x += (!!Display.key(SDLK_RIGHT) - !!Display.key(SDLK_LEFT)) * Display.getLogicalMult() * 5;
+		y += (!!Display.key(SDLK_DOWN) - !!Display.key(SDLK_UP)) * Display.getLogicalMult() * 5;
+		test.setPos(x,y);
 		test.draw();
+		cout << Display.getFps() << endl;
 		// affichage ?
 	}
 	// sdl_MessageError("toto");
