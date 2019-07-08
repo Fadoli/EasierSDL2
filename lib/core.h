@@ -20,10 +20,10 @@
 #define undefined 0
 
 using namespace std;
-typedef SDL_Surface Surface;
 
 namespace sdl2_lib
 {
+typedef SDL_Surface Surface;
 
 class core
 {

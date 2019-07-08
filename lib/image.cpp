@@ -29,28 +29,12 @@ void Image::Free()
 
     // Else notify the texture we are not using it anymore
     texture->delRef();
-    // And remove it from this object
-    texture = NULL;
-    Name[0] = 0;
+    // And reinit this ;)
+    Init();
 }
 void Image::Init()
 {
     Name[0] = 0;
-    Zx = 1;
-    Zy = 1;
-    Fx = 0;
-    Fy = 0;
-    W = 0;
-    H = 0;
-    bx = 0;
-    by = 0;
-
-    D.x = 0;
-    D.y = 0;
-    D.w = 0;
-    D.h = 0;
-
-    Centered = 0;
     texture = 0;
 }
 Image::~Image()
@@ -66,7 +50,6 @@ Image::Image(Image &Img)
 {
     (*this) = Img;
 }
-
 Image::Image(Screen *S, Surface *From)
 {
     Init();
@@ -101,97 +84,24 @@ void Image::Change(Surface *surf)
 #endif // DEBUG
     Free();
     texture = new Texture(screen->getRender(), surf);
+    Reset(texture->w, texture->h, 0);
 #if DEBUG >= 2
     if (texture == 0)
         cout << "Texture is NULL !" << endl;
 #endif // DEBUG
     SDL_FreeSurface(surf);
-    setZoom(1);
 }
 
 Image &Image::operator=(Image &Orig)
 {
-    Init();
+    Free();
     texture = Orig.texture;
     texture->addRef();
     screen = Orig.screen;
-    setCenter(Orig.Centered);
     strcpy(Name, Orig.Name);
-    //setZoom(100,100);
-    /*
-    cout << endl;
-    cout << Zx << " x " << Zy << endl;
-    cout << W << " x " << H << endl;
-    cout << w << " x " << h << endl;
-    cout << bx << " x " << by << endl;
-    */
     return (*this);
 }
-
-void Image::setZoomx(double Zoom)
-{
-    Zx = Zoom;
-    W = Zx * w();
-    if (Centered)
-    {
-        bx = -W / 2;
-    }
-    D.w = W;
-}
-void Image::setZoomy(double Zoom)
-{
-    Zy = Zoom;
-    H = Zy * h();
-    if (Centered)
-    {
-        by = -H / 2;
-    }
-    D.h = H;
-}
-void Image::setZoom(double Zoomx, double Zoomy)
-{
-    setZoomx(Zoomx);
-    setZoomy(Zoomy);
-}
-void Image::setZoom(double Zoom)
-{
-    Zx = Zoom;
-    Zy = Zoom;
-
-    H = Zy * h();
-    W = Zx * w();
-    if (Centered)
-    {
-        bx = -W / 2;
-        by = -H / 2;
-    }
-    D.w = W;
-    D.h = H;
-}
-void Image::setSize(int W, int H)
-{
-    this->W = W;
-    this->H = H;
-    Fx = W;
-    Fy = H;
-    D.w = W;
-    D.h = H;
-    if (Centered)
-    {
-        bx = -W / 2;
-        by = -H / 2;
-    }
-}
-void Image::setCenter(bool t)
-{
-    if (t)
-        Centered = 1;
-    else
-        Centered = 0;
-    setZoom(Zx);
-    setZoom(Zy);
-}
-
+/* 
 void Image::drawOrigAng(int Sx, int Sy, int Dx, int Dy, int Angx, int Angy, int Angz, double Zoom)
 {
     SDL_Point from;
@@ -227,28 +137,17 @@ void Image::drawOrigAng(int Sx, int Sy, int Dx, int Dy, int Angx, int Angy, int 
 
     SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &D, Angz, &from, Flip);
 }
-
-void Image::draw(int x, int y, int ang, int R, int G, int B, int FLIP)
+*/
+void Image::internal_draw(int x, int y, int Ang, Flip FLIP)
 {
-    D.x = x + bx;
-    D.y = y + by;
-    SDL_SetTextureColorMod(texture->Orig, R, G, B);
-    SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &D, ang, 0, (SDL_RendererFlip)FLIP);
+    SDL_Rect drawTo;
+    drawTo.x = x;
+    drawTo.y = y;
+    drawTo.w = w;
+    drawTo.h = h;
+    if (needsRGB)
+        SDL_SetTextureColorMod(texture->Orig, R, G, B);
+    SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &drawTo, Ang, 0, (SDL_RendererFlip)FLIP);
 }
 
-void Image::draw(int x, int y, int ang)
-{
-    D.x = x + bx;
-    D.y = y + by;
-    //cout << D.x << ";" << D.y << " " << W << "x" << H << endl;
-    SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &D, ang, 0, SDL_FLIP_NONE);
-}
-
-void Image::draw(int x, int y)
-{
-    D.x = x + bx;
-    D.y = y + by;
-    //cout << D.x << ";" << D.y << " " << W << "x" << H << endl;
-    SDL_RenderCopy(screen->getRender(), texture->Orig, 0, &D);
-}
 } // namespace sdl2_lib

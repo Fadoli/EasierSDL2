@@ -23,6 +23,7 @@
 
 namespace sdl2_lib
 {
+
 class Screen;
 
 class Texture
@@ -77,64 +78,42 @@ public:
 
     /// Attention le delete de la surface est integree
     void Change(Surface *In);
-    Image(Screen *S = 0, Surface *From = 0);
+    Image(Screen *S, Surface *From);
     Image(Screen *S, const char *);
+
     /// Attention ne copie pas la vram, il ne faut pas liberer si il y a encore des enfants ...
     /// Securise par des fonctionnalitees internes.
     Image &operator=(Image &Orig);
     Image(Image *Img);
     Image(Image &Img);
 
-    void drawOrigAng(int Sx, int Sy, int Dx, int Dy, int Angx, int Angy, int Angz, double Zoom);
-    /// Permet de changer le % de zoom celon la precision souhaite en entree ( ensuite en 2^PREC ).
-
-    virtual void setZoomx(double zoom);
-    virtual void setZoomy(double zoom);
-    virtual void setZoom(double zoomx, double zoomy);
-    virtual void setZoom(double zoom);
-
-    virtual void setSize(int w, int h);
-    virtual void setCenter(bool t = true);
-
-    virtual void draw(int x, int y);
+/*
+    virtual void draw();
     virtual void draw(int x, int y, int Ang);
     virtual void draw(int x, int y, int ang, int R, int G, int B, int FLIP);
+    void drawOrigAng(int Sx, int Sy, int Dx, int Dy, int Angx, int Angy, int Angz, double Zoom);
+*/
+    virtual void setColorFilter(int R, int G, int B)
+    {
+        this->R = R;
+        this->G = G;
+        this->B = B;
 
-    virtual char *getName()
+        needsRGB = (R != 255) || (G != 255) || (B != 255);
+    }
+    /**
+     * @brief Get the Name of the 'image'
+     * @return char* 
+     */
+    virtual const char *getName()
     {
         return Name;
     }
-
-    void affiche()
-    {
-        cout << "Dimension " << W << ";" << H << endl;
-    }
-
-    int w()
-    {
-        if (!texture)
-            return 0;
-        return texture->w;
-    }
-    int h()
-    {
-        if (!texture)
-            return 0;
-        return texture->h;
-    }
-    int getX()
-    {
-        //cout << "getX : " << D.x << endl;
-        return D.x;
-    }
-    int getY()
-    {
-        //cout << "getY : " << D.y << endl;
-        return D.y;
-    }
-
-    long int W, H;
-    Texture *getTexture()
+    /**
+     * @brief Get the Texture of the 'image'
+     * @return Texture* 
+     */
+    const Texture *getTexture()
     {
         return texture;
     }
@@ -142,15 +121,14 @@ public:
     static Surface *_empty;
 
 protected:
-    int bx, by, Fx, Fy;
-    double Zx, Zy;
-    int Centered;
     char Name[128];
+    bool needsRGB = false;
+    uint8_t R=255, G=255, B=255;
     Texture *texture;
-    SDL_Rect D;
 
+    virtual void internal_draw(int x, int y, int Ang, Flip FLIP);
 private:
-    Surface *_innernLoadImg(const char *);
+    static Surface *_innernLoadImg(const char *);
     void Init();
     Screen *screen;
 };
