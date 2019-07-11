@@ -51,16 +51,18 @@ void Screen::FPS_DELAY()
 {
     int Remain = (TARGET_LAST + TARGET_TIME) - SDL_GetTicks();
 
-    while (Remain > 2)
+    while (Remain > 1)
     {
         SDL_Delay(1);
         Remain = (TARGET_LAST + TARGET_TIME) - SDL_GetTicks();
     }
-
+    /*
+    Better have more FPS than actually locking it doing nothing ;)
     while (Remain > 0)
     {
         Remain = (TARGET_LAST + TARGET_TIME) - SDL_GetTicks();
     }
+    */
 }
 void Screen::update()
 {
@@ -270,14 +272,14 @@ int Screen::getFps()
 int Screen::Do()
 {
     int Mouselx = Mousex, Mousely = Mousey;
-    if (Mousel)
-        Mousel = Pressed;
-    if (Mouser)
-        Mouser = Pressed;
+    Mousel = !!Mousel;
+    Mouser = !!Mouser;
+
     calc_fps();
     SDL_SetRenderDrawColor(Render, 0, 0, 0, 255);
     update();
     event();
+
     Mousevx = Mousex - Mouselx;
     Mousevy = Mousey - Mousely;
     return isOpen();
