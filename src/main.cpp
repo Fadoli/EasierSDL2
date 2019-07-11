@@ -17,8 +17,9 @@ int main(int, char **)
 	auto var = core();
 
 	Screen Display;
-	Display.create("Demo", SX, SY, SDL_WINDOW_RESIZABLE, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	Display.create("Demo", SX, SY, SDL_WINDOW_RESIZABLE, SDL_RENDERER_ACCELERATED);
 	Display.setLogicalFPS(60);
+	Display.setFPS(100);
 	
 	// Image that fails to load are just 'pink' (255,128,128)
 	Image test(&Display, "no_image");
