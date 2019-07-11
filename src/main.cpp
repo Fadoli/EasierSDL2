@@ -26,6 +26,7 @@ int main(int, char **)
 	// test.setSize(SX,SY);
 
 	double x=0,y=0;
+	int lastFPS = 0;
 
 	SDL_RenderSetLogicalSize(Display.getRender(), SX, SY);
 
@@ -40,7 +41,13 @@ int main(int, char **)
 		y += (!!Display.key(SDLK_DOWN) - !!Display.key(SDLK_UP)) * Display.getLogicalMult() * 5;
 		test.setPos(x,y);
 		test.draw();
-		cout << Display.getFps() << endl;
+
+		int fps = Display.getFps();
+		if ( lastFPS != fps )
+		{
+			lastFPS = fps;
+			cout << "Avg fps : " << lastFPS << endl;
+		}
 		// affichage ?
 	}
 	// sdl_MessageError("toto");

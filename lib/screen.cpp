@@ -252,19 +252,12 @@ int Screen::isOpen()
 void Screen::calc_fps()
 {
     Frame++;
-    if (Frame < FPS_CALC_REFRESH)
-        return;
     unsigned int now = SDL_GetTicks();
-    if (now == Before)
-    {
-        SDL_Delay(1);
-    }
-    now = SDL_GetTicks();
-    if (now == Before)
-    {
-        now++;
-    }
-    FPS = (1000 * Frame) / (now - Before);
+    unsigned int dif = now - Before;
+    if (Frame < FPS_CALC_REFRESH || dif < (10*FPS_CALC_REFRESH))
+        return;
+    //cout << "had " << Frame << " in " << dif << "ms" << endl;
+    FPS = (1000 * Frame) / dif;
     Before = now;
     Frame = 0;
 }

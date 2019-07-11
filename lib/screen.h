@@ -17,7 +17,7 @@ using namespace std;
 namespace sdl2_lib
 {
 
-#define FPS_CALC_REFRESH 30
+#define FPS_CALC_REFRESH 20
 #define SDLK_COUNT 283
 #define MAX_DROP 32
 #define CONVERT SDLK_CAPSLOCK
