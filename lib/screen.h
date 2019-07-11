@@ -40,13 +40,30 @@ public:
     void name(char *title);
     void update();
     void destroy();
-
     int isOpen();
 
+    /**
+     * @brief Set a upper FPS 'limit' (automaticly sleep if we have some spare times >=2ms) 
+     * @param FPS Targeted FPS :)
+     */
     void setFPS(int FPS);
-    void setLogicalFPS(int FPS);
-    double getLogicalMult();
+    /**
+     * @brief Get the computed FPS (over few ms and few frames)
+     * @return int 
+     */
     int getFps();
+    /**
+     * @brief Set the 'logical' FPS : it can be used to make your game not frame dependant
+     * @param FPS 
+     */
+    void setLogicalFPS(int FPS);
+    /**
+     * @brief Get the double corresponding to the % of the frame compared to your target :
+     * If the frame gets rendered twice as fast, will output 0.5
+     * If the frame is reduced by half, will output 2
+     * @return double the 'frame-time' multiplier
+     */
+    double getLogicalMult();
 
     void event();
     int Do();
