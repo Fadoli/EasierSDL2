@@ -107,7 +107,6 @@ private:
     SDL_Window *Window;
     SDL_Renderer *Render;
 
-    void FPS_DELAY();
     void init(int x, int y);
     void calc_fps();
 

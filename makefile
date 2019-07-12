@@ -20,16 +20,20 @@ INCLUDE= -Ilib/
 OBJECTS= $(addprefix obj/, $(notdir $(SOURCES:.cpp=.o)))
 
 ## Default rule executed
-all: $(TARGET)
+all: obj_setup $(TARGET)
 
-## Debug
-debug: $(TARGET)
-	$(DBG) ./$(TARGET)
+obj_setup:
+	mkdir -p ./obj
 
+obj_clean:
+	rm -rf ./obj
 ## Clean Rule
 clean:
 	rm -f $(TARGET) $(OBJECTS)
 
+## Debug
+debug: $(TARGET)
+	$(DBG) ./$(TARGET)
 
 ## Rule for making the actual target
 $(TARGET): $(OBJECTS)

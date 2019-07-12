@@ -19,6 +19,16 @@
 #define UNDEFINED 0
 #define undefined 0
 
+#define DEBUG 0
+#if DEBUG > 0
+#define PRINT(A) PRINT_LVL(A, 1)
+#define PRINT_LVL(A, B) ((B > DEBUG) ? std::cout : (std::cout << "File : " << __FILE__ << ":" << __LINE__ << "\n" \
+                                                              << A << std::endl))
+#else
+#define PRINT(A) PRINT_LVL(A, 1)
+#define PRINT_LVL(A, B)
+#endif
+
 using namespace std;
 
 namespace sdl2_lib

@@ -47,37 +47,29 @@ void Screen::setFPS(int A)
     TARGET_FPS = A;
     TARGET_TIME = (1000 / A);
 }
-void Screen::FPS_DELAY()
-{
-    int Remain = (TARGET_LAST + TARGET_TIME) - SDL_GetTicks();
-
-    while (Remain > 1)
-    {
-        SDL_Delay(1);
-        Remain = (TARGET_LAST + TARGET_TIME) - SDL_GetTicks();
-    }
-    /*
-    Better have more FPS than actually locking it doing nothing ;)
-    while (Remain > 0)
-    {
-        Remain = (TARGET_LAST + TARGET_TIME) - SDL_GetTicks();
-    }
-    */
-}
 void Screen::update()
 {
     // Just updating & cleaning the screen here.
+    PRINT_LVL("Screen::update : Render clear", 4);
     SDL_RenderPresent(Render);
     SDL_RenderClear(Render);
 
-    // Do the fps related things
+    // Limit FPS
+    PRINT_LVL("Screen::update : Limit FPS", 4);
+    unsigned int elapsed = SDL_GetTicks() - TARGET_LAST;
     if (TARGET_FPS)
     {
-        FPS_DELAY();
+        int Remain = TARGET_TIME - elapsed;
+        if (Remain >= 1)
+            SDL_Delay(Remain);
     }
+
+    // Compute multiplier
+    PRINT_LVL("Screen::update : Compute multiplier", 4);
+    elapsed = SDL_GetTicks() - TARGET_LAST;
     if (TARGET_LOGICFPS)
     {
-        TARGET_MULT = (double)(SDL_GetTicks() - TARGET_LAST) / TARGET_LOGIC;
+        TARGET_MULT = ((double)(elapsed * TARGET_LOGICFPS) / 1000);
     }
     TARGET_LAST = SDL_GetTicks();
 }
@@ -146,6 +138,7 @@ void Screen::event()
     int key;
     while (SDL_PollEvent(&E))
     {
+        PRINT_LVL("In event" << E.type, 5);
         switch (E.type)
         {
         case SDL_DROPFILE: // Drag & Drop
@@ -233,6 +226,7 @@ void Screen::event()
         default:
             break;
         }
+        PRINT_LVL("Out event" << E.type, 5);
     }
 }
 
@@ -256,9 +250,8 @@ void Screen::calc_fps()
     Frame++;
     unsigned int now = SDL_GetTicks();
     unsigned int dif = now - Before;
-    if (Frame < FPS_CALC_REFRESH || dif < (10*FPS_CALC_REFRESH))
+    if (Frame < FPS_CALC_REFRESH || dif < (10 * FPS_CALC_REFRESH))
         return;
-    //cout << "had " << Frame << " in " << dif << "ms" << endl;
     FPS = (1000 * Frame) / dif;
     Before = now;
     Frame = 0;
@@ -275,9 +268,12 @@ int Screen::Do()
     Mousel = !!Mousel;
     Mouser = !!Mouser;
 
+    PRINT_LVL("Screen::Do - calc_fps", 4);
     calc_fps();
     SDL_SetRenderDrawColor(Render, 0, 0, 0, 255);
+    PRINT_LVL("Screen::Do - update", 4);
     update();
+    PRINT_LVL("Screen::Do - event", 4);
     event();
 
     Mousevx = Mousex - Mouselx;
