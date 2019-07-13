@@ -37,24 +37,21 @@ public:
     void create(string title, int x, int y, Uint32 Winflag, Uint32 Renflag);
     void recreate(Uint32 Renflag);
     void name(string title);
-    void name(char *title);
-    void update();
-    void destroy();
-    int isOpen();
+    void name(const char *title);
 
     /**
-     * @brief Set a upper FPS 'limit' (automaticly sleep if we have some spare times >=2ms) 
+     * @brief Set a upper FPS 'limit' (automaticly sleep if we have some spare times >=2ms)
      * @param FPS Targeted FPS :)
      */
     void setFPS(int FPS);
     /**
      * @brief Get the computed FPS (over few ms and few frames)
-     * @return int 
+     * @return int
      */
     int getFps();
     /**
      * @brief Set the 'logical' FPS : it can be used to make your game not frame dependant
-     * @param FPS 
+     * @param FPS
      */
     void setLogicalFPS(int FPS);
     /**
@@ -65,12 +62,23 @@ public:
      */
     double getLogicalMult();
 
-    void event();
     int Do();
-    int lastPressed();                  // retourne la derniere touche utilisee ( inutile ? )
-    int lastPressed(unsigned int From); // Retourne la derniere touche utilise SI utilise apres From
-    int key(int Key);
-    int HasWindowEventHappened();
+    /**
+     * @brief get the last pressed key, if it happened after the given ms
+     *
+     * @param From : the ms from which we accept the last input
+     * @return int : the keycode
+     */
+    int lastPressed(unsigned int From = 0);
+    /**
+     * @brief check if the key state match the event type
+     *
+     * @param Key the keycode you want to query
+     * @param eventType the type of the event
+     * @return int
+     */
+    int key(int Key, int eventType = Pressed | OnPress | OnNewPress);
+    bool hasWindowEventHappened();
     unsigned int getTime()
     {
         return TARGET_LAST;
@@ -88,7 +96,7 @@ public:
     {
         return (DropsCount > 0);
     }
-    char *getDrop()
+    char * getDrop()
     {
         if (hasDrop())
             return DropsData[--DropsCount];
@@ -102,13 +110,17 @@ public:
     int Sx, Sy;
 
 private:
+    void init(int x, int y);
+    void calc_fps();
+    void event();
+    void update();
+    void destroy();
+
     int DropsCount;
-    char DropsData[MAX_DROP][256];
+    char DropsData[MAX_DROP][512];
     SDL_Window *Window;
     SDL_Renderer *Render;
 
-    void init(int x, int y);
-    void calc_fps();
 
     SDL_Event E;
     int Open, Frame, FPS;
@@ -117,14 +129,11 @@ private:
 
     int Clavier[SDLK_COUNT]; /// Conteneur des touches clavier
     unsigned int Before;
-
     unsigned int TARGET_LAST;
-    unsigned int TARGET_FPS;
     unsigned int TARGET_TIME;
-
     unsigned int TARGET_LOGICFPS;
-    double TARGET_LOGIC;
     double TARGET_MULT;
+
     int Wdevent;
 };
 

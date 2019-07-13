@@ -40,8 +40,8 @@ int main(int, char **)
 			cout << "OnNewPress" << endl;
 		if (space & OnPress)
 			cout << "OnPress" << endl;
-		x += (!!Display.key(SDLK_RIGHT) - !!Display.key(SDLK_LEFT)) * mult;
-		y += (!!Display.key(SDLK_DOWN) - !!Display.key(SDLK_UP)) * mult;
+		x += (Display.key(SDLK_RIGHT, Pressed) - Display.key(SDLK_LEFT, Pressed)) * mult;
+		y += (Display.key(SDLK_DOWN, Pressed) - Display.key(SDLK_UP, Pressed)) * mult;
 		test.setPos(x, y);
 		test.draw();
 

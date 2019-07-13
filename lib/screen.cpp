@@ -21,10 +21,8 @@ void Screen::init(int X, int Y)
     Mousey = 0;
 
     TARGET_LAST = SDL_GetTicks();
-    TARGET_FPS = 0;
     TARGET_TIME = 0;
     TARGET_MULT = 0;
-    TARGET_LOGIC = 0;
     TARGET_LOGICFPS = 0;
     FPS = 0;
     Frame = 0;
@@ -40,11 +38,9 @@ void Screen::init(int X, int Y)
 void Screen::setLogicalFPS(int A)
 {
     TARGET_LOGICFPS = A;
-    TARGET_LOGIC = ((double)1000 / A);
 }
 void Screen::setFPS(int A)
 {
-    TARGET_FPS = A;
     TARGET_TIME = (1000 / A);
 }
 void Screen::update()
@@ -57,12 +53,10 @@ void Screen::update()
     // Limit FPS
     PRINT_LVL("Screen::update : Limit FPS", 4);
     unsigned int elapsed = SDL_GetTicks() - TARGET_LAST;
-    if (TARGET_FPS)
-    {
-        int Remain = TARGET_TIME - elapsed;
-        if (Remain >= 1)
-            SDL_Delay(Remain);
-    }
+
+    int Remain = TARGET_TIME - elapsed;
+    if (Remain >= 1)
+        SDL_Delay(Remain);
 
     // Compute multiplier
     PRINT_LVL("Screen::update : Compute multiplier", 4);
@@ -112,7 +106,7 @@ void Screen::destroy()
     SDL_DestroyRenderer(Render);
 }
 
-void Screen::name(char *name)
+void Screen::name(const char *name)
 {
     SDL_SetWindowTitle(Window, name);
 }
@@ -121,7 +115,7 @@ void Screen::name(string name)
     SDL_SetWindowTitle(Window, name.c_str());
 }
 
-int Screen::key(int Key)
+int Screen::key(int Key, int eventType)
 {
     int Id = (Key < 128) ? Key : Key - CONVERT;
     int lcl = Clavier[Id];
@@ -129,8 +123,13 @@ int Screen::key(int Key)
     {
         Clavier[Id] = Pressed;
     }
-    return lcl;
+    return lcl & eventType;
 }
+bool Screen::hasWindowEventHappened()
+{
+    return !!Wdevent;
+}
+
 void Screen::event()
 {
     unsigned int Time = SDL_GetTicks();
@@ -230,20 +229,6 @@ void Screen::event()
     }
 }
 
-int Screen::HasWindowEventHappened()
-{
-    if (Wdevent)
-    {
-        Wdevent = 0;
-        return 1;
-    }
-    return 0;
-}
-
-int Screen::isOpen()
-{
-    return (Open == 1);
-}
 
 void Screen::calc_fps()
 {
@@ -278,13 +263,9 @@ int Screen::Do()
 
     Mousevx = Mousex - Mouselx;
     Mousevy = Mousey - Mousely;
-    return isOpen();
+    return (Open == 1);
 }
 
-int Screen::lastPressed()
-{
-    return LastPressed;
-}
 int Screen::lastPressed(unsigned int Bef)
 {
     return (Bef <= MsLastPressed) * LastPressed;
