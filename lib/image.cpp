@@ -7,16 +7,13 @@
 
 namespace sdl2_lib
 {
-Surface *Image::_empty = SurfaceRGB(64, 64, 255, 128, 128);
-
+    
 Surface *Image::_innernLoadImg(const char *filename)
 {
     Surface *out = IMG_Load(filename);
     if (out == NULL)
     {
-        if (_empty == NULL)
-            _empty = SurfaceRGB(64, 64, 255, 128, 128);
-        out = _empty;
+        out = SurfaceRGB(64, 64, 255, 128, 128);
     }
     return out;
 }
@@ -29,6 +26,7 @@ void Image::Free()
 
     // Else notify the texture we are not using it anymore
     texture->delRef();
+    
     // And reinit this ;)
     Init();
 }
@@ -44,10 +42,12 @@ Image::~Image()
 
 Image::Image(Image *Img)
 {
+    Init();
     (*this) = (*Img);
 }
 Image::Image(Image &Img)
 {
+    Init();
     (*this) = Img;
 }
 Image::Image(Screen *S, Surface *From)
@@ -101,7 +101,7 @@ Image &Image::operator=(Image &Orig)
     strcpy(Name, Orig.Name);
     return (*this);
 }
-/* 
+/*
 void Image::drawOrigAng(int Sx, int Sy, int Dx, int Dy, int Angx, int Angy, int Angz, double Zoom)
 {
     SDL_Point from;

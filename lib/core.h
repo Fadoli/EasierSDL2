@@ -1,10 +1,12 @@
-/*!
+/**
  *\file core.h
- *\brief basic functionnality
- *\author Franck
- *\version 1
- *\date June 2019
- *
+ * @author Franck Mourre (franck.mourre@gmail.com)
+ * @brief Wrapper around SDL2 initialisation 
+ * @version 0.1
+ * @date 2019-07-13
+ * 
+ * @copyright Copyright (c) 2019
+ * 
  * This part is really linked into SDL, in the goal to make other more independant,
  * Allows generating / modifying Surfaces as well as some TTF related function
  */
@@ -20,13 +22,13 @@
 #define undefined 0
 
 #define DEBUG 0
-#if DEBUG > 0
-#define PRINT(A) PRINT_LVL(A, 1)
+
 #define PRINT_LVL(A, B) ((B > DEBUG) ? std::cout : (std::cout << "File : " << __FILE__ << ":" << __LINE__ << "\n" \
                                                               << A << std::endl))
-#else
+#if DEBUG > 0
 #define PRINT(A) PRINT_LVL(A, 1)
-#define PRINT_LVL(A, B)
+#else
+#define PRINT(A) PRINT_LVL(A, 0)
 #endif
 
 using namespace std;

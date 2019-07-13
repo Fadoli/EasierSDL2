@@ -1,9 +1,12 @@
-/*!
- *\file screen.h
- *\brief surcouche de gestion de l'ecran et de ses evenements
- *\author Franck Mourre
- *\version 1
- *\date Octobre 2016
+/**
+ * @file screen.h
+ * @author Franck Mourre (franck.mourre@gmail.com)
+ * @brief Wrapper around screen, events and FPS-limitation logics 
+ * @version 0.1
+ * @date 2019-07-13
+ * 
+ * @copyright Copyright (c) 2019
+ * 
  */
 
 #ifndef SCREEN_H
@@ -48,7 +51,7 @@ public:
      * @brief Get the computed FPS (over few ms and few frames)
      * @return int
      */
-    int getFps();
+    int getFps() const;
     /**
      * @brief Set the 'logical' FPS : it can be used to make your game not frame dependant
      * @param FPS
@@ -60,7 +63,7 @@ public:
      * If the frame is reduced by half, will output 2
      * @return double the 'frame-time' multiplier
      */
-    double getLogicalMult();
+    double getLogicalMult() const;
 
     int Do();
     /**
@@ -69,7 +72,7 @@ public:
      * @param From : the ms from which we accept the last input
      * @return int : the keycode
      */
-    int lastPressed(unsigned int From = 0);
+    int lastPressed(unsigned int From = 0) const;
     /**
      * @brief check if the key state match the event type
      *
@@ -78,8 +81,8 @@ public:
      * @return int
      */
     int key(int Key, int eventType = Pressed | OnPress | OnNewPress);
-    bool hasWindowEventHappened();
-    unsigned int getTime()
+    bool hasWindowEventHappened() const;
+    unsigned int getTime() const
     {
         return TARGET_LAST;
     }
@@ -92,11 +95,11 @@ public:
     {
         return Render;
     }
-    int hasDrop()
+    int hasDrop() const
     {
         return (DropsCount > 0);
     }
-    char * getDrop()
+    const char * getDrop()
     {
         if (hasDrop())
             return DropsData[--DropsCount];

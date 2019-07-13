@@ -67,7 +67,7 @@ void Screen::update()
     }
     TARGET_LAST = SDL_GetTicks();
 }
-double Screen::getLogicalMult()
+double Screen::getLogicalMult() const
 {
     return TARGET_MULT;
 }
@@ -125,7 +125,7 @@ int Screen::key(int Key, int eventType)
     }
     return lcl & eventType;
 }
-bool Screen::hasWindowEventHappened()
+bool Screen::hasWindowEventHappened() const
 {
     return !!Wdevent;
 }
@@ -242,7 +242,7 @@ void Screen::calc_fps()
     Frame = 0;
 }
 
-int Screen::getFps()
+int Screen::getFps() const
 {
     return FPS;
 }
@@ -252,6 +252,7 @@ int Screen::Do()
     int Mouselx = Mousex, Mousely = Mousey;
     Mousel = !!Mousel;
     Mouser = !!Mouser;
+    Wdevent = 0;
 
     PRINT_LVL("Screen::Do - calc_fps", 4);
     calc_fps();
@@ -266,7 +267,7 @@ int Screen::Do()
     return (Open == 1);
 }
 
-int Screen::lastPressed(unsigned int Bef)
+int Screen::lastPressed(unsigned int Bef) const
 {
     return (Bef <= MsLastPressed) * LastPressed;
 }

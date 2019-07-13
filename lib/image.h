@@ -1,15 +1,14 @@
-/*!
- *\file image.h
- *\brief Grosse surcouche encapsulante des images
- *\author Franck Mourre
- *\version 1
- *\date Octobre 2016
+/**
+ * @file image.h
+ * @author Franck Mourre (franck.mourre@gmail.com)
+ * @brief Wrapper around Image/Texture
+ * @version 0.1
+ * @date 2019-07-13
+ * 
+ * @copyright Copyright (c) 2019
  *
- * Permet de stocker de maniere 'simple' les donnees d'une image
- * Permet de gerer des agrandissments
- * Permet l'affichage avec filtre RGB
- * Permet l'affichage avec flip / angle
- *
+ * Allows storing image in a much simpler manner,
+ * Extends object, and implement it's internal missing display function
  */
 
 #ifndef IMAGE_H
@@ -26,6 +25,10 @@ namespace sdl2_lib
 
 class Screen;
 
+/**
+ * @brief Allow to duplicate references of the same texture and intelligently implement 
+ * 
+ */
 class Texture
 {
 public:
@@ -40,7 +43,7 @@ public:
     {
         if (nbRef > 0)
         {
-            cout << "Trying to delete a texture that is still being used ?" << endl;
+            PRINT_LVL("WARNING: Trying to delete a texture that is still being used !" , -1);
         }
         SDL_DestroyTexture(this->Orig);
     }
@@ -117,8 +120,6 @@ public:
     {
         return texture;
     }
-
-    static Surface *_empty;
 
 protected:
     char Name[128];

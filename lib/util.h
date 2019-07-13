@@ -1,9 +1,12 @@
-/*!
- *\file util.h
- *\brief different outils utilitaire generaliste
- *\author Franck Mourre
- *\version 1
- *\date Octobre 2016
+/**
+ * @file util.h
+ * @author Franck Mourre (franck.mourre@gmail.com)
+ * @brief Some utility/basics function 
+ * @version 0.1
+ * @date 2019-07-13
+ * 
+ * @copyright Copyright (c) 2019
+ * 
  */
 
 #ifndef UTIL_H_INCLUDED
