@@ -11,12 +11,24 @@
 
 #ifndef UTIL_H_INCLUDED
 #define UTIL_H_INCLUDED
-
-#include <math.h>
-#include <string.h>
+#include <cstdint>
+#include <iostream>
 
 namespace sdl2_lib
 {
+
+#define UNDEFINED 0
+#define undefined 0
+
+#define DEBUG 0
+#define PRINT_LVL(A, B) ((B > DEBUG) ? std::cout : (std::cout << "File : " << __FILE__ << ":" << __LINE__ << "\n" \
+                                                              << A << std::endl))
+#if DEBUG > 0
+#define PRINT(A) PRINT_LVL(A, 1)
+#else
+#define PRINT(A) PRINT_LVL(A, 0)
+#endif
+
 #define OWNER 1
 /// Should be set to 1 when compiling and creating then to 0 before uploading ( with crypt files )
 #define CRYPT 1
@@ -37,7 +49,7 @@ int randint(int Min, int Max);
 
 int Strlen(char *I);
 
-unsigned long int converti(char *input);
+uint64_t converti(char *input);
 /** Converti permet la conversion d'une chaine de caractere en entier, la fonction n'est pas protegee contre les overflows
   * @param input : la chaine de caractere a convertir en entier.
   * @return : retourne le resultat de la conversion

@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
+#include <string.h>
 
 #include "util.h"
 
@@ -20,48 +22,7 @@ int Strlen(char *I)
     return I - O;
 }
 
-void InitData()
-{
-    int i;
-    if (Dsin == 0 || Dcos == 0)
-    {
-        Dsin = new int[DATAMAX];
-        Dcos = new int[DATAMAX];
-
-        for (i = 0; i < DATAMAX; i++)
-        {
-            Dcos[i] = 100 * cos((double)(i * 2 * PI) / DATAMAX);
-            Dsin[i] = 100 * sin((double)(i * 2 * PI) / DATAMAX);
-        }
-    }
-    return;
-}
-
-void deleteData()
-{
-    delete[] Dsin;
-    delete[] Dcos;
-    Dcos = 0;
-    Dsin = 0;
-    return;
-}
-
-int D_sin(int Ang)
-{
-    if (Ang >= 0)
-        return Dsin[Ang % DATAMAX];
-    else
-        return -Dsin[(-Ang) % DATAMAX];
-}
-int D_cos(int Ang)
-{
-    if (Ang >= 0)
-        return Dcos[Ang % DATAMAX];
-    else
-        return Dcos[(-Ang) % DATAMAX];
-}
-
-unsigned long int converti(char *input)
+uint64_t converti(char *input)
 {
     int i = 0, out = 0;
     char c;
@@ -106,13 +67,13 @@ int crypt(char *cryptit, int force)
 
     if (lecture == 0)
     {
-        printf("Il semble qu'il manque un fichier!\n");
+        PRINT_LVL("WARNING : looks like a file is missing !",1);
         return -1;
     }
 
-    char Read[1000];
-    unsigned int Hacher = 0;
-    while (fgets(Read, 1000, lecture) != NULL)
+    char Read[1024];
+    uint64_t Hacher = 0;
+    while (fgets(Read, 1024, lecture) != NULL)
     {
         Hacher += hachage(Read, MAXSUM);
     }
@@ -123,7 +84,7 @@ int crypt(char *cryptit, int force)
     {
         sprintf(Read, "%s_crypt", cryptit);
         fichier = fopen(Read, "w");
-        fprintf(fichier, "%u", Hacher);
+        fprintf(fichier, "%llud", (long long unsigned int) Hacher);
         fclose(fichier);
     }
     else // OWNER
@@ -132,55 +93,24 @@ int crypt(char *cryptit, int force)
         fichier = fopen(Read, "r");
         if (fichier == 0)
         {
-            printf("le fichier de securisation est introuvable, retelecharger le jeu ?\n");
+            PRINT_LVL("ERROR : checksum file is missing !",0);
             return -1;
         }
         else
         {
-            fgets(Read, 1000, fichier);
-            unsigned long int lcl = converti(Read);
+            if (!fgets(Read, 1024, fichier))
+                PRINT_LVL("ERROR : checksum file is empty !",0);
+            uint64_t lcl = converti(Read);
             fclose(fichier);
             if (lcl != Hacher)
             {
-                printf("le fichier indique que des modifictions ont eu lieu !");
+                PRINT_LVL("ERROR : checksum file doesn't match !",0);
                 return -1;
             }
         }
     }
 #endif // CRYPT
     return 1;
-}
-
-int sin100(int Deg)
-{
-    static int t = 0;
-    static int Out[360];
-    if (t == 0)
-    {
-        for (t = 0; t < 360; t++)
-            Out[t] = 100 * sin(t * PI / 180);
-        t = 1;
-    }
-    if (Deg > 0)
-        return Out[Deg % 360];
-    else
-        return -Out[(-Deg) % 360];
-}
-
-int cos100(int Deg)
-{
-    static int t = 0;
-    static int Out[360];
-    if (t == 0)
-    {
-        for (t = 0; t < 360; t++)
-            Out[t] = 100 * cos(t * PI / 180);
-        t = 1;
-    }
-    if (Deg > 0)
-        return Out[Deg % 360];
-    else
-        return Out[(-Deg) % 360];
 }
 
 double DegToRad(int Deg)

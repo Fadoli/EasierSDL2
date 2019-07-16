@@ -45,7 +45,7 @@ Image::Image(Image *Img)
     Init();
     (*this) = (*Img);
 }
-Image::Image(Image &Img)
+Image::Image(Image &Img) : Object()
 {
     Init();
     (*this) = Img;

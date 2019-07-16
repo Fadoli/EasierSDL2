@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <math.h>
-#include <time.h>
 #include <iostream>
 #include "core.h"
 #include "screen.h"

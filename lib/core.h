@@ -14,22 +14,11 @@
 #ifndef CORE_H_INCLUDED
 #define CORE_H_INCLUDED
 
+#include "util.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 
-#define UNDEFINED 0
-#define undefined 0
-
-#define DEBUG 0
-
-#define PRINT_LVL(A, B) ((B > DEBUG) ? std::cout : (std::cout << "File : " << __FILE__ << ":" << __LINE__ << "\n" \
-                                                              << A << std::endl))
-#if DEBUG > 0
-#define PRINT(A) PRINT_LVL(A, 1)
-#else
-#define PRINT(A) PRINT_LVL(A, 0)
-#endif
 
 using namespace std;
 
