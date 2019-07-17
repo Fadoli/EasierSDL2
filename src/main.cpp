@@ -15,7 +15,7 @@ int main(int, char **)
 
 	Screen Display;
 	Display.create("Demo", SX, SY, SDL_WINDOW_RESIZABLE, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	Display.setLogicalFPS(200);
+	Display.setLogicalFPS(60);
 	//Display.setFPS(100);
 
 	// Image that fails to load are just 'pink' (255,128,128)
@@ -43,12 +43,28 @@ int main(int, char **)
 		test.setPos(x, y);
 		test.draw();
 
-		SDL_SetRenderDrawColor(Display.getRender(),255,255,255,255);
-		for ( int i = 0; i < SX; i+=20) {
-			int next = i + 20;
+		/*
+		for ( int i = 0; i < SX; i+=30) {
+			int next = i + 30;
 			Display.drawLine(i, SY/2 + SY/3 * cos(base+(double)i/360),next,SY/2 + SY/3 * cos(base+(double)(next)/360));
 			Display.drawLine(i, SY/2 + SY/3 * cos(3*(base+(double)i/360)),next,SY/2 + SY/3 * cos(3*(base+(double)(next)/360)));
 			Display.drawLine(i, SY/2 + SY/3 * cos(5*(base+(double)i/360)),next,SY/2 + SY/3 * cos(5*(base+(double)(next)/360)));
+		}
+		*/
+
+		SDL_SetRenderDrawColor(Display.getRender(),255,255,255,255);
+		for (int size = 2; size < 20 ; size ++)
+		{
+			double ratio = 2*PI/size;
+			double from = 0;
+			double to = base;
+			double sizeMult = 5+15*size;
+			for (int cur = 0; cur<size; cur++ )
+			{
+				from = ratio*(cur+1) + base;
+				Display.drawLine(SX/2+sizeMult*cos(from),SY/2+sizeMult*sin(from),SX/2+sizeMult*cos(to),SY/2+sizeMult*sin(to));
+				to = from;
+			}
 		}
 
 		int fps = Display.getFps();
