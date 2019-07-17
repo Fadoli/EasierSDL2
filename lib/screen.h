@@ -106,6 +106,22 @@ public:
         else
             return 0;
     }
+    /**
+     * @brief Draw a line
+     * 
+     * @param x1 define first point
+     * @param y1 define first point
+     * @param x2 define second point
+     * @param y2 define second point
+     */
+    void drawLine(int x1, int y1, int x2, int y2);
+    /**
+     * @brief Draw a point
+     * 
+     * @param x define point
+     * @param y define point
+     */
+    void drawPoint(int x, int y);
 
     int Mousex, Mousey;
     int Mousevx, Mousevy;

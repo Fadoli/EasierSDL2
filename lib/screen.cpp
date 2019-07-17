@@ -229,7 +229,6 @@ void Screen::event()
     }
 }
 
-
 void Screen::calc_fps()
 {
     Frame++;
@@ -271,4 +270,15 @@ int Screen::lastPressed(unsigned int Bef) const
 {
     return (Bef <= MsLastPressed) * LastPressed;
 }
+
+// Let's do some rendering things :)
+void Screen::drawLine(int x1, int y1, int x2, int y2)
+{
+    SDL_RenderDrawLine(Render, x1, y1, x2, y2);
+}
+void Screen::drawPoint(int x, int y)
+{
+    SDL_RenderDrawPoint(Render, x, y);
+}
+
 } // namespace sdl2_lib

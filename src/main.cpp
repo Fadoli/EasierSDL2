@@ -46,9 +46,9 @@ int main(int, char **)
 		SDL_SetRenderDrawColor(Display.getRender(),255,255,255,255);
 		for ( int i = 0; i < SX; i+=20) {
 			int next = i + 20;
-			SDL_RenderDrawLine(Display.getRender(),i, SY/2 + SY/3 * cos(base+(double)i/360),next,SY/2 + SY/3 * cos(base+(double)(next)/360));
-			SDL_RenderDrawLine(Display.getRender(),i, SY/2 + SY/3 * cos(3*(base+(double)i/360)),next,SY/2 + SY/3 * cos(3*(base+(double)(next)/360)));
-			SDL_RenderDrawLine(Display.getRender(),i, SY/2 + SY/3 * cos(5*(base+(double)i/360)),next,SY/2 + SY/3 * cos(5*(base+(double)(next)/360)));
+			Display.drawLine(i, SY/2 + SY/3 * cos(base+(double)i/360),next,SY/2 + SY/3 * cos(base+(double)(next)/360));
+			Display.drawLine(i, SY/2 + SY/3 * cos(3*(base+(double)i/360)),next,SY/2 + SY/3 * cos(3*(base+(double)(next)/360)));
+			Display.drawLine(i, SY/2 + SY/3 * cos(5*(base+(double)i/360)),next,SY/2 + SY/3 * cos(5*(base+(double)(next)/360)));
 		}
 
 		int fps = Display.getFps();
