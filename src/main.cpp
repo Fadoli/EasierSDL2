@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include "core.h"
 #include "screen.h"
 #include "image.h"
