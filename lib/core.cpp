@@ -1,5 +1,6 @@
 #include "util.h"
 #include "core.h"
+#include <string.h>
 
 #define DEFAULT_SDL SDL_INIT_EVERYTHING
 #define DEFAULT_IMG (IMG_INIT_JPG | IMG_INIT_PNG)
@@ -27,13 +28,13 @@ core::~core()
 
 /**
      * @brief Create a fully colored Surface from the specified size & color
-     * 
+     *
      * @param w width
      * @param h height
      * @param R Red color
      * @param G Green color
      * @param B Blue color
-     * @return Surface* 
+     * @return Surface*
      */
 Surface *SurfaceRGB(int w, int h, int R, int G, int B)
 {
@@ -47,14 +48,14 @@ Surface *SurfaceRGB(int w, int h, int R, int G, int B)
 }
 /**
      * @brief Create a fully colored Surface from the specified size & color with Alpha
-     * 
+     *
      * @param w width
      * @param h height
      * @param R Red color
      * @param G Green color
      * @param B Blue color
      * @param A Alpha canal
-     * @return Surface* 
+     * @return Surface*
      */
 Surface *SurfaceRGBA(int w, int h, int R, int G, int B, int A)
 {

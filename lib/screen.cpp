@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string.h>
 
 #include "screen.h"
 #include "util.h"

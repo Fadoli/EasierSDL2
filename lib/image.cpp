@@ -1,5 +1,6 @@
 #include "SDL2/SDL_image.h"
 #include <iostream>
+#include <string.h>
 
 #include "screen.h"
 #include "image.h"
@@ -7,7 +8,7 @@
 
 namespace sdl2_lib
 {
-    
+
 Surface *Image::_innernLoadImg(const char *filename)
 {
     Surface *out = IMG_Load(filename);
@@ -26,7 +27,7 @@ void Image::Free()
 
     // Else notify the texture we are not using it anymore
     texture->delRef();
-    
+
     // And reinit this ;)
     Init();
 }
