@@ -15,7 +15,6 @@
 				<Compiler>
 					<Add option="-pg" />
 					<Add option="-Og" />
-					<Add option="-no-pie" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
