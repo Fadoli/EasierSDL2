@@ -59,7 +59,7 @@ int main(int, char **)
 			double ratio = 2*PI/size;
 			double from = 0;
 			double to = base;
-			double sizeMult = 5+15*size;
+			double sizeMult = 5+15*size*sin(2*base) + 40*cos(base*5);
 			for (int cur = 0; cur<size; cur++ )
 			{
 				from = ratio*(cur+1) + base;
