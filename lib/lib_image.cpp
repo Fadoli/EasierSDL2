@@ -132,5 +132,4 @@ void Image::internal_draw(int x, int y, double Ang, Flip FLIP)
         SDL_SetTextureColorMod(texture->Orig, R, G, B);
     SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &drawTo, Ang, 0, (SDL_RendererFlip)FLIP);
 }
-
 } // namespace sdl2_lib

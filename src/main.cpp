@@ -48,9 +48,18 @@ int main(int, char **)
 		test.setPos(x, y);
 		test.setAng(base*180);
 		test.draw();
+
+		for(int i =0; i < SX + 64 ; i += 30)
+		{
+			test.drawAt(i,SY/2 + 200 * sin(base + (double) i / 100),180/PI*(base + (double) i / 100));
+		}
+
+
+		/*
 		test2.setPos(x+200, y);
 		test2.setAng(base*180);
 		test2.draw(32,32);
+		*/
 		/*
 		for ( int i = 0; i < SX; i+=30) {
 			int next = i + 30;

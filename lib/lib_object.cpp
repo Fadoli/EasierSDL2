@@ -63,6 +63,10 @@ void Object::setAng(double ang)
     this->ang = ang;
 }
 
+void Object::drawAt(double posx, double posy, double ang, Flip FLIP)
+{
+    internal_draw(posx + deltax, posy + deltay, ang, FLIP);
+}
 void Object::draw(Flip FLIP)
 {
     internal_draw(posx + deltax, posy + deltay, base_ang + ang, FLIP);

@@ -65,11 +65,15 @@ public:
      * @param ang
      */
     virtual void setAng(double ang);
+
+    /**
+     * @brief Start a 'simple' draw command
+     */
+    virtual void drawAt(double posx, double posy, double ang = 0, Flip FLIP = Flip::FLIP_NONE);
     /**
      * @brief Start the draw command
      */
     virtual void draw(Flip FLIP = Flip::FLIP_NONE);
-    
     /**
      * @brief Start the draw command
      */
