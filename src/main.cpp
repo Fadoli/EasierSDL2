@@ -1,8 +1,8 @@
 #include <iostream>
 #include <math.h>
-#include "core.h"
-#include "screen.h"
-#include "image.h"
+#include "lib_core.h"
+#include "lib_screen.h"
+#include "lib_image.h"
 
 #define SX 1200
 #define SY 600

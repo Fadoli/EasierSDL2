@@ -14,7 +14,7 @@
 #ifndef CORE_H_INCLUDED
 #define CORE_H_INCLUDED
 
-#include "util.h"
+#include "lib_util.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>

@@ -13,7 +13,7 @@
 #define SCREEN_H
 #include <string>
 
-#include "core.h"
+#include "lib_core.h"
 
 using namespace std;
 

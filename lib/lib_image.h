@@ -16,8 +16,8 @@
 #include <string>
 #include <iostream>
 
-#include "core.h"
-#include "object.h"
+#include "lib_core.h"
+#include "lib_object.h"
 #define PREC 10
 
 namespace sdl2_lib

@@ -1,5 +1,5 @@
-#include "util.h"
-#include "core.h"
+#include "lib_util.h"
+#include "lib_core.h"
 #include <string.h>
 
 #define DEFAULT_SDL SDL_INIT_EVERYTHING

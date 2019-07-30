@@ -2,8 +2,8 @@
 #define font_H
 
 #include <stdio.h>
-#include "core.h"
-#include "screen.h"
+#include "lib_core.h"
+#include "lib_screen.h"
 
 namespace sdl2_lib
 {

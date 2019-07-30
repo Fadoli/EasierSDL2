@@ -1,4 +1,4 @@
-#include "object.h"
+#include "lib_object.h"
 
 namespace sdl2_lib
 {

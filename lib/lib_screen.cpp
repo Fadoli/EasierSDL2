@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string.h>
 
-#include "screen.h"
-#include "util.h"
-#include "image.h"
+#include "lib_screen.h"
+#include "lib_util.h"
+#include "lib_image.h"
 
 namespace sdl2_lib
 {

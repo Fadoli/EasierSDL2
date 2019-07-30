@@ -3,7 +3,7 @@
 #include <math.h>
 #include <string.h>
 
-#include "util.h"
+#include "lib_util.h"
 
 namespace sdl2_lib
 {
