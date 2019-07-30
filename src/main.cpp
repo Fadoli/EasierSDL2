@@ -16,7 +16,7 @@ int main(int, char **)
 
 	Screen Display;
 	Display.create("Demo", SX, SY, SDL_WINDOW_RESIZABLE, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	Display.setLogicalFPS(60);
+	Display.setLogicalFPS(100);
 	//Display.setFPS(100);
 
 	// Image that fails to load are just 'pink' (255,128,128)
@@ -26,6 +26,7 @@ int main(int, char **)
 
 	double x = 0, y = 0;
 	int lastFPS = 0;
+	double player_speed = 3;
 	double base = 0;
 	SDL_RenderSetLogicalSize(Display.getRender(), SX, SY);
 
@@ -39,8 +40,8 @@ int main(int, char **)
 			cout << "OnNewPress" << endl;
 		if (space & OnPress)
 			cout << "OnPress" << endl;
-		x += (Display.key(SDLK_RIGHT, Pressed) - Display.key(SDLK_LEFT, Pressed)) * mult;
-		y += (Display.key(SDLK_DOWN, Pressed) - Display.key(SDLK_UP, Pressed)) * mult;
+		x += (Display.key(SDLK_RIGHT, Pressed) - Display.key(SDLK_LEFT, Pressed)) * mult * player_speed;
+		y += (Display.key(SDLK_DOWN, Pressed) - Display.key(SDLK_UP, Pressed)) * mult * player_speed;
 		test.setPos(x, y);
 		test.draw();
 

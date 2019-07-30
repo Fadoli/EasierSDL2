@@ -122,19 +122,6 @@ double DegToRad(int Deg)
     return 0;
 }
 
-double DegToRadOpt(int Deg)
-{
-    static int t = 0;
-    static double Out[1080];
-    if (t == 0)
-    {
-        for (t = 0; t < 1080; t++)
-            Out[t] = (double)(t * PI / 180);
-        t = 1;
-    }
-    return Out[Deg];
-}
-
 char *FileName(char *path)
 {
     unsigned int i, c = 0;

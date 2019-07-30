@@ -21,7 +21,7 @@ namespace sdl2_lib
 #define undefined 0
 
 #define DEBUG 0
-#define PRINT_LVL(A, B) ((B > DEBUG) ? std::cout : (std::cout << "File : " << __FILE__ << ":" << __LINE__ << "\n" \
+#define PRINT_LVL(A, B) ((B > DEBUG) ? std::cout : (std::cout << "File : " << __FILE__ << ":" << __LINE__ << "(" << __FUNCTION__ << ")" << "\n" \
                                                               << A << std::endl))
 #if DEBUG > 0
 #define PRINT(A) PRINT_LVL(A, 1)
@@ -29,20 +29,15 @@ namespace sdl2_lib
 #define PRINT(A) PRINT_LVL(A, 0)
 #endif
 
-#define OWNER 1
 /// Should be set to 1 when compiling and creating then to 0 before uploading ( with crypt files )
-#define CRYPT 1
-/// This should always be 1
+#define OWNER 1
 
-/// DATAMAX is the number of data to stock for sin & cos, it also change the frequence
-#define DATAMAX 360
+/// This should always be 1
+#define CRYPT 1
 
 /// Internal Data
-#define PI 3.1416
+#define PI 3.14159265359
 #define MAXSUM 137863
-
-///Define qui permet d'afficher des messages d'erreur utile pour les dev :D.
-#define ERROR(X) cout << "Error \"%s\" occured in function %s at line %d file %s !\n",X,__FUNCTION__,__LINE__,__FILE__)
 
 /// Fonction generant un entier aleatoire entre Min et Max [Min;Max[
 int randint(int Min, int Max);
@@ -67,8 +62,6 @@ int crypt(char *cryptit, int force);
 
 double DegToRad(int Deg);
 
-int sin100(int Deg);
-int cos100(int Deg);
 int ang_2d(int x1, int y1, int x2, int y2);
 int dist_2d(int x1, int y1, int x2, int y2);
 
@@ -78,15 +71,6 @@ char *FileExtension(char *path);
 char *FileName(char *path);
 
 int isIn(char *Data, int DataLen, char *Look, int LookLen);
-
-/// Version 'Optimise' de la fonction qui ne recalcul pas tout.
-double DegToRadOpt(int Deg);
-
-/// Fonction optimisee des cosinus et sinus ( mais necessitant plus de ram )
-void InitData();
-void deleteData();
-int D_sin(int Ang);
-int D_cos(int Ang);
 } // namespace sdl2_lib
 
 #endif // UTIL_H_INCLUDED

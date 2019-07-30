@@ -37,7 +37,7 @@ Surface *font::text(const char *text, int R, int G, int B)
         Surface *loc;
         if ((loc = TTF_RenderText_Blended(self, text, Col)) == 0)
         {
-            sdl_MessageError("3 : impossible de charger un texte :( !");
+            PRINT_LVL("Error while rendering text",-1);
         }
         return loc;
     }
@@ -58,7 +58,7 @@ Surface *font::utf8(const char *text, int R, int G, int B)
         Surface *loc;
         if ((loc = TTF_RenderUTF8_Blended(self, text, Col)) == 0)
         {
-            sdl_MessageError("3 : impossible de charger un texte :( !");
+            PRINT_LVL("Error while rendering text",-1);
         }
         return loc;
     }
