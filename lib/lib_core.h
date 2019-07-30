@@ -19,7 +19,6 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 
-
 using namespace std;
 
 namespace sdl2_lib
@@ -41,13 +40,6 @@ public:
 
 Surface *SurfaceRGB(int x, int y, int r, int g, int b);
 Surface *SurfaceRGBA(int x, int y, int r, int g, int b, int a);
-
-/// Les textes
-Surface *sdl_TextCreate(TTF_Font *Police, const char *text, int R, int G, int B);
-Surface *sdl_TextShadow(TTF_Font *Police, const char *text, int R, int G, int B, int Deca);
-Surface *sdl_UTF8Create(TTF_Font *Police, const char *UTF8, int R, int G, int B);
-/// Permet de creer un texte sur plusieurs lignes si besoin.
-Surface *sdl_TextCreateMaxX(TTF_Font *Police, const char *text, int Scale, int R, int G, int B, int MX);
 
 void putpixel(Surface *surface, int x, int y, Uint32 pixel);
 void sdlChangeSCKUNO(Surface *In, int R, int G, int B);

@@ -14,6 +14,11 @@ public:
     ~font();
     const TTF_Font *getFont();
 
+    Surface *text(const char *text, int R = 0, int G = 0, int B = 0);
+    Surface *utf8(const char *text, int R = 0, int G = 0, int B = 0);
+    Surface *textShadow(const char *text, int Deca, int R = 0, int G = 0, int B = 0);
+    Surface *textNewLine(const char *text, int Scale, int lineSize, int R = 0, int G = 0, int B = 0);
+
 private:
     TTF_Font *self;
 };
