@@ -23,20 +23,20 @@ Object::~Object()
 
 void Object::setCenter(bool value)
 {
+    int dif = value ? 1 : 0;
     // compute the diference between now and then
-    int dif = (value == true) - (isCentered == true);
+    // int dif = (value == true) - (isCentered == true);
     // Off -> On (is = false, value = true) = 1
     // Off -> Off or On -> On = 0
     // On -> Off (is = true, value = false) = -1
 
     // Let's just apply it ;)
-    deltax = (dif * w) / 2;
-    deltay = (dif * h) / 2;
+    deltax = - (dif * w) / 2;
+    deltay = - (dif * h) / 2;
 }
 
 void Object::updateSize()
 {
-    //ctor
     w = base_w * zoomx;
     h = base_h * zoomy;
 }
@@ -58,9 +58,18 @@ void Object::setPos(double x, double y)
     posy = y;
 }
 
+void Object::setAng(double ang)
+{
+    this->ang = ang;
+}
+
 void Object::draw(Flip FLIP)
 {
     internal_draw(posx + deltax, posy + deltay, base_ang + ang, FLIP);
+}
+void Object::draw(int ox, int oy, Flip FLIP)
+{
+    internal_draw(posx + deltax, posy + deltay, ox , oy, base_ang + ang, FLIP);
 }
 
 } // namespace sdl2_lib

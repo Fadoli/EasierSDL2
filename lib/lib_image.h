@@ -127,7 +127,8 @@ protected:
     uint8_t R=255, G=255, B=255;
     Texture *texture;
 
-    virtual void internal_draw(int x, int y, int Ang, Flip FLIP);
+    virtual void internal_draw(int x, int y, double Ang, Flip FLIP);
+    virtual void internal_draw(int x, int y, int Ox, int Oy, double Ang, Flip FLIP);
 private:
     static Surface *_innernLoadImg(const char *);
     void Init();

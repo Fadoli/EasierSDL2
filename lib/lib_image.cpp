@@ -102,44 +102,26 @@ Image &Image::operator=(Image &Orig)
     strcpy(Name, Orig.Name);
     return (*this);
 }
-/*
-void Image::drawOrigAng(int Sx, int Sy, int Dx, int Dy, int Angx, int Angy, int Angz, double Zoom)
+
+void Image::internal_draw(int x, int y, int Ox, int Oy, double Ang, Flip FLIP)
 {
     SDL_Point from;
+    SDL_Rect drawTo;
 
-    int Zx = D_cos(Angx) * Zoom / 100, Zy = D_sin(Angy) * Zoom / 100;
-    Angz = (Angz * 360) / DATAMAX;
+    drawTo.x = x;
+    drawTo.y = y;
+    drawTo.w = w;
+    drawTo.h = h;
 
-    SDL_RendererFlip Flip = SDL_FLIP_NONE;
+    from.x = -Ox - deltax;
+    from.y = -Oy - deltay;
 
-    D.x = Dx * Zx / 100;
-    D.y = Dy * Zy / 100;
-
-    D.w = w() * Zx / 100;
-    D.h = h() * Zy / 100;
-    if (D.w < 0)
-    {
-        D.w = -D.w;
-        if (D.h < 0)
-            Angz = (Angz + 180) % 360;
-        else
-            Flip = SDL_FLIP_HORIZONTAL;
-    }
-    else if (D.h < 0)
-    {
-        D.h = -D.h;
-        Flip = SDL_FLIP_VERTICAL;
-    }
-
-    from.x = -D.x + D.w / 2;
-    from.y = -D.y + D.h / 2;
-    D.x += Sx - D.w / 2;
-    D.y += Sy - D.h / 2;
-
-    SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &D, Angz, &from, Flip);
+    if (needsRGB)
+        SDL_SetTextureColorMod(texture->Orig, R, G, B);
+    SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &drawTo, Ang, &from, (SDL_RendererFlip)FLIP);
 }
-*/
-void Image::internal_draw(int x, int y, int Ang, Flip FLIP)
+
+void Image::internal_draw(int x, int y, double Ang, Flip FLIP)
 {
     SDL_Rect drawTo;
     drawTo.x = x;

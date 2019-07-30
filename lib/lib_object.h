@@ -60,9 +60,20 @@ public:
      */
     virtual void setPos(double x, double y);
     /**
+     * @brief Set the Ang object
+     * 
+     * @param ang
+     */
+    virtual void setAng(double ang);
+    /**
      * @brief Start the draw command
      */
     virtual void draw(Flip FLIP = Flip::FLIP_NONE);
+    
+    /**
+     * @brief Start the draw command
+     */
+    virtual void draw(int ox, int oy, Flip FLIP = Flip::FLIP_NONE);
 
 protected:
     /**
@@ -71,8 +82,20 @@ protected:
      * @param x 
      * @param y 
      * @param Ang 
+     * @param FLIP 
      */
-    virtual void internal_draw(int x, int y, int Ang, Flip FLIP) = 0;
+    virtual void internal_draw(int x, int y, double Ang, Flip FLIP) = 0;
+    /**
+     * @brief Actual render command : needs to be implemented by objects
+     * 
+     * @param x 
+     * @param y 
+     * @param Ox 
+     * @param Oy 
+     * @param Ang 
+     * @param FLIP 
+     */
+    virtual void internal_draw(int x, int y, int Ox, int Oy, double Ang, Flip FLIP) = 0;
 
     double posx = 0, posy = 0;
     double deltax = 0, deltay = 0;

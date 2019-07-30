@@ -21,6 +21,9 @@ int main(int, char **)
 
 	// Image that fails to load are just 'pink' (255,128,128)
 	Image test(&Display, "no_image");
+	test.setCenter();
+	Image test2(&Display, "no_image");
+	test2.setCenter();
 	// test.setPos(0,0);
 	// test.setSize(SX,SY);
 
@@ -43,8 +46,11 @@ int main(int, char **)
 		x += (Display.key(SDLK_RIGHT, Pressed) - Display.key(SDLK_LEFT, Pressed)) * mult * player_speed;
 		y += (Display.key(SDLK_DOWN, Pressed) - Display.key(SDLK_UP, Pressed)) * mult * player_speed;
 		test.setPos(x, y);
+		test.setAng(base*180);
 		test.draw();
-
+		test2.setPos(x+200, y);
+		test2.setAng(base*180);
+		test2.draw(32,32);
 		/*
 		for ( int i = 0; i < SX; i+=30) {
 			int next = i + 30;
