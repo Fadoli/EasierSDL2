@@ -1,5 +1,5 @@
 /**
- * @file image.h
+ * @file lib_image.h
  * @author Franck Mourre (franck.mourre@gmail.com)
  * @brief Wrapper around Image/Texture
  * @version 0.1
@@ -26,8 +26,7 @@ namespace sdl2_lib
 class Screen;
 
 /**
- * @brief Allow to duplicate references of the same texture and intelligently implement 
- * 
+ * @brief Allow to duplicate references of the same texture and intelligently implement it's memory management
  */
 class Texture
 {
@@ -41,11 +40,14 @@ public:
     }
     ~Texture()
     {
+        // Prevent from destroying a non allocated Texture ?
+        if ( this->Orig == NULL ) return;
         if (nbRef > 0)
         {
             PRINT_LVL("WARNING: Trying to delete a texture that is still being used !" , -1);
         }
         SDL_DestroyTexture(this->Orig);
+        this->Orig = NULL;
     }
 
     void addRef()

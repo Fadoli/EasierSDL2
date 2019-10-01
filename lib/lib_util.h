@@ -1,5 +1,5 @@
 /**
- * @file util.h
+ * @file lib_util.h
  * @author Franck Mourre (franck.mourre@gmail.com)
  * @brief Some utility/basics function 
  * @version 0.1

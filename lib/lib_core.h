@@ -1,5 +1,5 @@
 /**
- *\file core.h
+ * @file lib_core.h
  * @author Franck Mourre (franck.mourre@gmail.com)
  * @brief Wrapper around SDL2 initialisation 
  * @version 0.1

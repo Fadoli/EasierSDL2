@@ -1,5 +1,5 @@
 /**
- * @file screen.h
+ * @file lib_screen.h
  * @author Franck Mourre (franck.mourre@gmail.com)
  * @brief Wrapper around screen, events and FPS-limitation logics 
  * @version 0.1

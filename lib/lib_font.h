@@ -1,3 +1,15 @@
+/**
+ * @file lib_font.h
+ * @author Franck Mourre (franck.mourre@gmail.com)
+ * @brief Wrapper around text rendering
+ * @version 0.1
+ * @date 2019-07-13
+ * 
+ * @copyright Copyright (c) 2019
+ *
+ * Allows handling font rendering, actual draw functions and cache are not in here
+ */
+
 #ifndef font_H
 #define font_H
 
