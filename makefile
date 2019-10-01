@@ -35,7 +35,7 @@ $(TARGET): $(OBJECTS)
 	@-echo "-- Link finished --"
 
 # compile and generate dependency 
-obj/%.o: */%.cpp makefile
+obj/%.o: */%.cpp */%.h makefile
 	@-echo "Building $@\n\t$(CC) $(CPPFLAGS) -c -o $@ $< $(INCLUDE)"
 	@-$(CC) $(CPPFLAGS) -c -o $@ $< $(INCLUDE)
 
