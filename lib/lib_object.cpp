@@ -65,15 +65,15 @@ void Object::setAng(double ang)
 
 void Object::drawAt(double posx, double posy, double ang, Flip FLIP)
 {
-    internal_draw(posx + deltax, posy + deltay, ang, FLIP);
+    internal_draw(posx + deltax + 0.5, posy + deltay + 0.5, ang, FLIP);
 }
 void Object::draw(Flip FLIP)
 {
-    internal_draw(posx + deltax, posy + deltay, base_ang + ang, FLIP);
+    internal_draw(posx + deltax + 0.5, posy + deltay + 0.5, base_ang + ang, FLIP);
 }
 void Object::draw(int ox, int oy, Flip FLIP)
 {
-    internal_draw(posx + deltax, posy + deltay, ox , oy, base_ang + ang, FLIP);
+    internal_draw(posx + deltax + 0.5, posy + deltay + 0.5, ox , oy, base_ang + ang, FLIP);
 }
 
 } // namespace sdl2_lib

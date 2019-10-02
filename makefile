@@ -2,7 +2,7 @@ CC= g++ -std=c++14
 DBG= gdb
 
 DFLAGS= -g
-OFLAGS= -O3
+OFLAGS= -Ofast
 CPPFLAGS= -Wall -Wextra $(OFLAGS)
 
 TARGET= sdl2.bin
