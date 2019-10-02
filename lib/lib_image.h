@@ -60,12 +60,16 @@ public:
         if (nbRef <= 0)
             delete this;
     }
+    int height() const {
+        return h;
+    }
+    int width() const {
+        return w;
+    }
 
     SDL_Texture *Orig;
     int h, w;
     int nbRef;
-
-protected:
 };
 
 inline void TextInit(Texture &O)
@@ -110,7 +114,7 @@ public:
      * @brief Get the Name of the 'image'
      * @return char* 
      */
-    virtual const char *getName()
+    virtual const char *getName() const
     {
         return Name;
     }

@@ -14,6 +14,7 @@ Surface *Image::_innernLoadImg(const char *filename)
     Surface *out = IMG_Load(filename);
     if (out == NULL)
     {
+        PRINT("Failed loading image : " << filename);
         out = SurfaceRGB(64, 64, 255, 128, 128);
     }
     return out;
