@@ -120,6 +120,7 @@ void Image::internal_draw(int x, int y, int Ox, int Oy, double Ang, Flip FLIP)
     if (needsRGB)
         SDL_SetTextureColorMod(texture->Orig, R, G, B);
     SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &drawTo, Ang, &from, (SDL_RendererFlip)FLIP);
+    screen->countDraw();
 }
 
 void Image::internal_draw(int x, int y, double Ang, Flip FLIP)
@@ -132,5 +133,6 @@ void Image::internal_draw(int x, int y, double Ang, Flip FLIP)
     if (needsRGB)
         SDL_SetTextureColorMod(texture->Orig, R, G, B);
     SDL_RenderCopyEx(screen->getRender(), texture->Orig, 0, &drawTo, Ang, 0, (SDL_RendererFlip)FLIP);
+    screen->countDraw();
 }
 } // namespace sdl2_lib

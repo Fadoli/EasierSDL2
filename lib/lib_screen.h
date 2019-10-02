@@ -20,7 +20,7 @@ using namespace std;
 namespace sdl2_lib
 {
 
-#define FPS_CALC_REFRESH 20
+#define FPS_CALC_REFRESH 30
 #define SDLK_COUNT 283
 #define MAX_DROP 32
 #define CONVERT SDLK_CAPSLOCK
@@ -123,6 +123,10 @@ public:
      */
     void drawPoint(int x, int y);
 
+    inline void countDraw() {
+        this->drawCalls ++;
+    };
+
     int Mousex, Mousey;
     int Mousevx, Mousevy;
     int Mouser, Mousel, Mousem; /// Touche lie aux cliques souris
@@ -154,6 +158,7 @@ private:
     double TARGET_MULT;
 
     int Wdevent;
+    int drawCalls;
 };
 
 } // namespace sdl2_lib

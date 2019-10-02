@@ -28,6 +28,7 @@ void Screen::init(int X, int Y)
     FPS = 0;
     Frame = 0;
     DropsCount = 0;
+    drawCalls = 0;
 
     Sx = X;
     Sy = Y;
@@ -253,7 +254,8 @@ int Screen::Do()
     Mousel = !!Mousel;
     Mouser = !!Mouser;
     Wdevent = 0;
-
+    PRINT_LVL("Current Draw calls : " << drawCalls, 3);
+    drawCalls = 0;
     PRINT_LVL("Screen::Do - calc_fps", 4);
     calc_fps();
     SDL_SetRenderDrawColor(Render, 0, 0, 0, 255);
@@ -276,10 +278,12 @@ int Screen::lastPressed(unsigned int Bef) const
 void Screen::drawLine(int x1, int y1, int x2, int y2)
 {
     SDL_RenderDrawLine(Render, x1, y1, x2, y2);
+    countDraw();
 }
 void Screen::drawPoint(int x, int y)
 {
     SDL_RenderDrawPoint(Render, x, y);
+    countDraw();
 }
 
 } // namespace sdl2_lib
