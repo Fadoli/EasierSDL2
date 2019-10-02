@@ -118,16 +118,16 @@ public:
      * @brief Get the Texture of the 'image'
      * @return Texture* 
      */
-    const Texture *getTexture()
+    Texture *getTexture()
     {
         return texture;
     }
+    Texture *texture;
 
 protected:
     char Name[128];
     bool needsRGB = false;
     uint8_t R=255, G=255, B=255;
-    Texture *texture;
 
     virtual void internal_draw(int x, int y, double Ang, Flip FLIP);
     virtual void internal_draw(int x, int y, int Ox, int Oy, double Ang, Flip FLIP);
