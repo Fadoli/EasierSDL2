@@ -55,10 +55,12 @@ void Screen::update()
     // Limit FPS
     PRINT_LVL("Screen::update : Limit FPS", 4);
     unsigned int elapsed = SDL_GetTicks() - TARGET_LAST;
-
     int Remain = TARGET_TIME - elapsed;
-    if (Remain >= 1)
-        SDL_Delay(Remain);
+    while ( Remain > 1)
+    {
+        Remain = TARGET_TIME - SDL_GetTicks() + TARGET_LAST;
+        SDL_Delay(1);
+    }
 
     // Compute multiplier
     PRINT_LVL("Screen::update : Compute multiplier", 4);
