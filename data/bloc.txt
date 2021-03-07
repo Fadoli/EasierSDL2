@@ -1,0 +1,145 @@
+﻿
+V // Vide
+default		// Ceci est le bloc qui définit tout bloc non définis
+value 0		// Quel valeur :D ?
+damage 0	// Quel domage occasioné lors du creusage ?
+weight 0	// Quel poid ?
+solidity 1	// Est-ce solide ?
+diggable 0	// Peut être creusé ?
+l_emit 0	// Es source de lumière ?
+ler 0		// Emit R
+leg 0		// Emit G
+leb 0		// Emit B
+lr 4		// Resistance lumineuse en /1000
+texture textures/vide.png
+
+O // Air
+from V		// Importe le statut d'un autre bloc
+?block		// Le définit comme bloc logique pour tout bloc non définit dans la map ( #ciel )
+solidity 0	// Quoi on peut voler dans le ciel ???
+l_emit 1	// Le ciel est lumineux parait il :D
+ler 255		// luminosite du ciel
+leg 255		// luminosite du ciel
+leb 255		// luminosite du ciel
+texture textures/ciel.png
+
+d // terre
+from V		// On importe le statut du bloc vide :D
+value 1		// La terre ça n'as pas de valeur
+weight 1	// Et c'est leger
+diggable 1	// La terre ça peut se creuser :D
+g_default	// ceci est le bloc que le générateur de map utiliseras par défaut ( absence de minerais / trous )
+lr 175		// Resistance lumineuse
+texture textures/terre.png
+
+s // pierre
+from d	
+diggable 0
+g_begin 5 		// Profondeur minimale	
+g_center 50		// Profondeur '0' de calcul de la proba
+g_rarity 0.02		// Probabilité à la profondeur minimale
+g_coefficient 0.00003 0	// Coefficient au premier et second ordre
+lr 350			// Resistance lumineuse
+texture textures/terre.png	// Texture de fond
+texture textures/pierre.png	// Texture de surcouche
+
+m // magma
+from d
+damage 500
+l_emit 1
+ler 196
+leg 128
+leb 128
+lr 80					// Resistance lumineuse
+g_begin 50 				// Profondeur minimale
+g_center 300				// Profondeur '0' de calcul de la proba
+g_rarity 0.01				// Probabilité à la profondeur minimale
+g_coefficient 0.00003 -0.00000004	// Coefficient au premier et second ordre
+texture textures/terre.png
+texture textures/lave.png
+
+
+u // uranium
+from m
+damage 1500
+l_emit 1
+ler 96
+leg 228
+ler 148
+g_begin 400			// Profondeur minimale
+g_center 750			// Profondeur '0' de calcul de la proba
+g_rarity 0.005			// Probabilité à la profondeur minimale
+texture textures/terre.png	// Texture de 'fond'
+texture textures/uranium.png	// Texture principale
+
+c // Charbon
+from d
+value 15
+weight 5
+damage 5
+g_begin 8	// Profondeur minimale
+g_center 150	// Profondeur '0' de calcul de la proba
+g_rarity 0.02	// Probabilité à la profondeur minimale
+g_coefficient 0.0001 -0.000001 // Coefficient au premier et second ordre
+texture textures/terre.png	// Texture de 'fond'
+texture textures/charbon.png
+
+C // Cuivre
+from c
+value 25
+weight 5
+damage 15
+g_begin 30	// Profondeur minimale
+g_center 150	// Profondeur '0' de calcul de la proba
+g_rarity 0.03	// Probabilité à la profondeur minimale
+g_coefficient 0.0005 -0.00001 // Coefficient au premier et second ordre
+texture textures/terre.png	// Texture de 'fond'
+texture textures/cuivre.png
+
+f // Fer
+from C
+value 100
+weight 15
+damage 30
+g_begin 50	// Profondeur minimale
+g_center 200	// Profondeur '0' de calcul de la proba
+g_rarity 0.02	// Probabilité à la profondeur minimale
+g_coefficient 0.0005 -0.00001 // Coefficient au premier et second ordre
+texture textures/terre.png	// Texture de 'fond'
+texture textures/fer.png
+
+o // Or
+from f
+value 250
+weight 30
+damage 60
+g_begin 100	// Profondeur minimale
+g_center 250	// Profondeur '0' de calcul de la proba
+g_rarity 0.02	// Probabilité à la profondeur minimale
+g_coefficient 0.0005 -0.00001 // Coefficient au premier et second ordre
+texture textures/terre.png	// Texture de 'fond'
+texture textures/or.png
+
+D // Diamant
+from o
+value 750
+weight 10
+damage 200
+g_begin 150	// Profondeur minimale
+g_center 500	// Profondeur '0' de calcul de la proba
+g_rarity 0.02	// Probabilité à la profondeur minimale
+g_coefficient 0.0005 -0.00001 // Coefficient au premier et second ordre
+texture textures/terre.png	// Texture de 'fond'
+texture textures/diamant.png
+
+e / Emeraude
+from D
+value 2500
+weight 15
+damage 500
+g_begin 250	// Profondeur minimale
+g_center 750	// Profondeur '0' de calcul de la proba
+g_rarity 0.03	// Probabilité à la profondeur minimale
+g_coefficient 0.0005 -0.00001 // Coefficient au premier et second ordre
+texture textures/terre.png	// Texture de 'fond'
+texture textures/emeraude.png

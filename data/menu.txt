@@ -1,0 +1,12 @@
+/ Informations :
+/ fonctions c à appelée sur les boutons :
+/ 0 : quitte menu
+/ 1 : nouvelle partie
+/ 2 : charger partie
+/ 3 : changer le son au volume choisi ( entre 0 et 100 )
+menu 0
+b 4	// Nombre de bouton
+>0 c 1	// Nouvelle partie
+>1 c 2	// Charger partie
+>2 g 1	// Il faut aller sur le sous menu 1
+>3 c 0	// quitter
