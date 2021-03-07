@@ -1,0 +1,18 @@
+# First ignore all .subdirs
+.*/
+# Then all . files excepts .gitignore
+.*
+!.gitignore
+
+# Don't want any objects / nor the output
+*.o
+obj/
+sdl2.bin
+
+*.layout
+
+*.exe
+
+gmon\.out
+
+SDL2\.depend
