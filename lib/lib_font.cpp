@@ -1,4 +1,5 @@
 #include "lib_font.h"
+#include "string.h"
 
 namespace sdl2_lib
 {
@@ -17,7 +18,7 @@ font::~font()
 
 /**
  * @brief get internal font
- * @return const TTF_Font* 
+ * @return const TTF_Font*
  */
 const TTF_Font *font::getFont()
 {
