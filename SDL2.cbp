@@ -47,19 +47,24 @@
 			<Add option="-static-libgcc" />
 			<Add option="-lmingw32 -lsdl2main -lsdl2 -lsdl2_image -lsdl2_ttf -lsdl2_mixer -lsdl2_net -llua" />
 		</Linker>
-		<Unit filename="lib/Font.cpp" />
-		<Unit filename="lib/Font.h" />
-		<Unit filename="lib/core.cpp" />
-		<Unit filename="lib/core.h" />
-		<Unit filename="lib/image.cpp" />
-		<Unit filename="lib/image.h" />
-		<Unit filename="lib/object.cpp" />
-		<Unit filename="lib/object.h" />
-		<Unit filename="lib/screen.cpp" />
-		<Unit filename="lib/screen.h" />
-		<Unit filename="lib/util.cpp" />
-		<Unit filename="lib/util.h" />
+		<Unit filename="lib/lib_core.cpp" />
+		<Unit filename="lib/lib_core.h" />
+		<Unit filename="lib/lib_font.cpp" />
+		<Unit filename="lib/lib_font.h" />
+		<Unit filename="lib/lib_image.cpp" />
+		<Unit filename="lib/lib_image.h" />
+		<Unit filename="lib/lib_mixer.cpp" />
+		<Unit filename="lib/lib_mixer.h" />
+		<Unit filename="lib/lib_object.cpp" />
+		<Unit filename="lib/lib_object.h" />
+		<Unit filename="lib/lib_screen.cpp" />
+		<Unit filename="lib/lib_screen.h" />
+		<Unit filename="lib/lib_util.cpp" />
+		<Unit filename="lib/lib_util.h" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/main.h" />
+		<Unit filename="src/map.cpp" />
+		<Unit filename="src/map.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
