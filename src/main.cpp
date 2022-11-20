@@ -4,7 +4,6 @@
 #include "lib_core.h"
 #include "lib_screen.h"
 #include "map.h"
-#include "coz.h"
 
 #define SX 1024
 #define SY 768
@@ -42,7 +41,6 @@ int main ( int argc, char ** argv )
 
     while( Display.Do() )
     {
-        COZ_PROGRESS;
 		int fps = Display.getFps();
 		if (lastFPS != fps)
 		{

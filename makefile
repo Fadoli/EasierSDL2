@@ -9,7 +9,7 @@ TARGET= sdl2.bin
 
 DIR1= src
 DIR2= lib
-LIBS= -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -llua5.2
+LIBS= -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 SOURCES = $(wildcard $(DIR1)/*.cpp) $(wildcard $(DIR2)/*.cpp)
 
